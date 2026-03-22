@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lisa & Eric — 4 september 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf6f0;
+    --cream-dark: #f0e9de;
+    --gold: #b89a5a;
+    --gold-light: #d4b97a;
+    --gold-pale: #e8d9b8;
+    --brown: #6b4f35;
+    --text: #3a2e24;
+    --text-light: #7a6a58;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: none;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 1.2rem 2rem;
+    background: rgba(250,246,240,0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--gold-pale);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  nav.visible { display: flex; }
+  nav a { color: var(--text-light); text-decoration: none; transition: color 0.3s; }
+  nav a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 5rem 2rem 4rem;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(184,154,90,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(184,154,90,0.06) 0%, transparent 50%),
+      var(--cream);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b89a5a' fill-opacity='0.04'%3E%3Cpath d='M30 0 C32 10 38 14 48 14 C38 18 32 26 30 30 C28 26 22 18 12 14 C22 14 28 10 30 0Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .hero-ornament { font-size: 1rem; color: var(--gold); letter-spacing: 0.5em; margin-bottom: 1.8rem; animation: fadeUp 1s ease both; }
+
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 10vw, 7rem); font-weight: 300; line-height: 1.05; color: var(--text); animation: fadeUp 1s ease 0.2s both; }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+
+  .hero-divider { display: flex; align-items: center; gap: 1rem; margin: 1.8rem auto; width: 280px; animation: fadeUp 1s ease 0.4s both; }
+  .hero-divider::before, .hero-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
+  .hero-divider span { font-size: 1.2rem; color: var(--gold); }
+
+  .hero-date { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 3vw, 1.4rem); font-weight: 300; letter-spacing: 0.25em; color: var(--text-light); animation: fadeUp 1s ease 0.5s both; }
+  .hero-location { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-top: 0.4rem; animation: fadeUp 1s ease 0.6s both; }
+
+  .hero-countdown { display: flex; gap: 2.5rem; margin-top: 2.5rem; animation: fadeUp 1s ease 0.8s both; }
+  .countdown-item { text-align: center; }
+  .countdown-num { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; color: var(--gold); display: block; line-height: 1; }
+  .countdown-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-light); margin-top: 0.3rem; }
+
+  /* CODE GATE */
+  .code-gate-hero { margin-top: 3rem; animation: fadeUp 1s ease 1s both; text-align: center; }
+  .code-gate-hero > p { font-size: 0.82rem; color: var(--text-light); letter-spacing: 0.03em; margin-bottom: 1.2rem; line-height: 1.7; }
+
+  .code-input-wrap { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; align-items: center; }
+
+  .code-input {
+    font-family: 'Jost', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--text);
+    background: rgba(255,255,255,0.75);
+    border: 1px solid var(--gold-pale);
+    padding: 0.9rem 1.4rem;
+    width: 220px;
+    outline: none;
+    transition: border-color 0.3s, background 0.3s;
+    backdrop-filter: blur(4px);
+  }
+  .code-input:focus { border-color: var(--gold); background: var(--white); }
+  .code-input.error { border-color: #c0392b; }
+
+  .code-error { font-size: 0.78rem; color: #c0392b; margin-top: 0.8rem; display: none; }
+  .code-hint { font-size: 0.72rem; color: var(--text-light); margin-top: 1rem; }
+  .code-hint a { color: var(--gold); text-decoration: none; }
+
+  /* SCROLL HINT */
+  .scroll-hint { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.4rem; color: var(--gold-light); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; animation: fadeIn 1s ease both; pointer-events: none; }
+  .scroll-arrow { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease infinite; }
+
+  /* BTN */
+  .btn { font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); background: var(--gold); border: none; padding: 1rem 2rem; cursor: pointer; transition: background 0.3s, transform 0.15s; }
+  .btn:hover { background: var(--brown); }
+  .btn:active { transform: scale(0.98); }
+
+  /* SITE CONTENT */
+  #site-content { display: none; opacity: 0; transition: opacity 0.8s ease; }
+  #site-content.unlocked { display: block; }
+  #site-content.fade-in { opacity: 1; }
+
+  /* WELCOME BANNER */
+  .welcome-banner { text-align: center; padding: 3rem 2rem 2.5rem; background: linear-gradient(135deg, var(--gold-pale) 0%, var(--cream-dark) 100%); border-bottom: 1px solid var(--gold-pale); }
+  .guest-type-pill { display: inline-block; background: var(--gold); color: var(--white); font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 0.4rem 1.2rem; margin-bottom: 1rem; }
+  .welcome-banner h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 300; color: var(--text); margin-bottom: 0.6rem; }
+  .welcome-banner p { font-size: 0.88rem; color: var(--text-light); line-height: 1.7; max-width: 520px; margin: 0 auto; }
+
+  /* SECTIONS */
+  .content-section { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
+  .section-label { font-size: 0.68rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); text-align: center; margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 300; text-align: center; color: var(--text); margin-bottom: 1rem; line-height: 1.2; }
+  .section-subtitle { text-align: center; color: var(--text-light); font-size: 0.9rem; line-height: 1.8; max-width: 560px; margin: 0 auto 3.5rem; }
+  .ornament-line { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
+  .ornament-line::before, .ornament-line::after { content: ''; width: 80px; height: 1px; background: linear-gradient(to right, transparent, var(--gold-pale)); }
+  .ornament-line span { color: var(--gold-pale); font-size: 0.8rem; }
+
+  /* PROGRAM */
+  .program-wrap { max-width: 860px; margin: 0 auto; }
+  .program-grid { position: relative; }
+  .program-grid::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold-pale) 8%, var(--gold-pale) 92%, transparent); transform: translateX(-50%); }
+
+  .program-item { display: grid; grid-template-columns: 1fr 70px 1fr; gap: 0.5rem; align-items: center; padding: 1.8rem 0; opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .program-item.visible { opacity: 1; transform: none; }
+
+  .program-item.left .program-content { text-align: right; grid-column: 1; }
+  .program-item.left .program-time   { grid-column: 2; }
+  .program-item.left .program-empty  { grid-column: 3; }
+  .program-item.right .program-empty  { grid-column: 1; }
+  .program-item.right .program-time   { grid-column: 2; }
+  .program-item.right .program-content{ grid-column: 3; text-align: left; }
+
+  .program-time { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+  .time-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--gold); border: 2px solid var(--cream); box-shadow: 0 0 0 3px var(--gold-pale); flex-shrink: 0; }
+  .time-dot.highlight { background: var(--brown); box-shadow: 0 0 0 4px rgba(107,79,53,0.18); width: 16px; height: 16px; }
+  .time-text { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold); font-style: italic; white-space: nowrap; }
+
+  .program-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 400; color: var(--text); margin-bottom: 0.3rem; }
+  .program-content p { font-size: 0.83rem; color: var(--text-light); line-height: 1.6; }
+
+  .program-item.special .program-content h3 { color: var(--brown); }
+  .program-item.special .time-text { color: var(--brown); }
+
+  .program-divider { display: flex; align-items: center; gap: 1rem; padding: 0.5rem 0; margin: 0.5rem 0; }
+  .program-divider::before, .program-divider::after { content: ''; flex: 1; height: 1px; background: var(--gold-pale); }
+  .program-divider span { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
+
+  /* MENU */
+  .menu-bg { background: var(--cream-dark); }
+  .menu-inner { max-width: 900px; margin: 0 auto; padding: 6rem 2rem; }
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+  .menu-card { background: var(--white); border: 1px solid var(--gold-pale); padding: 2rem; position: relative; overflow: hidden; opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .menu-card.visible { opacity: 1; transform: none; }
+  .menu-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(to bottom, var(--gold), var(--gold-light)); }
+  .menu-card-label { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+  .menu-item { padding: 0.8rem 0; border-bottom: 1px solid var(--cream-dark); }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item-name { font-family: 'Cormorant Garamond', serif; font-size: 1.08rem; color: var(--text); }
+  .menu-item-desc { font-size: 0.78rem; color: var(--text-light); margin-top: 0.2rem; line-height: 1.5; }
+
+  /* INFO */
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+  .info-card { background: var(--white); border: 1px solid var(--gold-pale); padding: 2rem; opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .info-card.visible { opacity: 1; transform: none; }
+  .info-card-icon { font-size: 1.4rem; color: var(--gold); margin-bottom: 0.8rem; }
+  .info-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; color: var(--text); margin-bottom: 0.5rem; }
+  .info-card p { font-size: 0.83rem; color: var(--text-light); line-height: 1.7; }
+  .info-card a { color: var(--gold); text-decoration: none; }
+
+  /* GIFTS */
+  .gifts-bg { background: var(--cream-dark); }
+  .gifts-inner { max-width: 900px; margin: 0 auto; padding: 6rem 2rem; }
+  .gifts-box { background: var(--white); border: 1px solid var(--gold-pale); padding: 3rem; text-align: center; position: relative; max-width: 580px; margin: 0 auto; }
+  .gifts-box::before { content: '✦'; position: absolute; top: 1rem; left: 1.5rem; color: var(--gold-pale); }
+  .gifts-box::after  { content: '✦'; position: absolute; bottom: 1rem; right: 1.5rem; color: var(--gold-pale); }
+  .gifts-box p { color: var(--text-light); line-height: 1.9; font-size: 0.92rem; margin-bottom: 1.2rem; }
+  .iban { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); letter-spacing: 0.08em; border: 1px solid var(--gold-pale); padding: 0.8rem 2rem; display: inline-block; margin: 0.5rem 0; }
+
+  /* RSVP */
+  .rsvp-bg { background: linear-gradient(135deg, #fdf9f4 0%, #f5ede0 100%); padding: 6rem 2rem; }
+  .rsvp-inner { max-width: 700px; margin: 0 auto; }
+  .rsvp-form { background: var(--white); border: 1px solid var(--gold-pale); padding: 3rem; }
+  .rsvp-badge { display: inline-block; background: var(--gold-pale); color: var(--brown); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.4rem 1rem; margin-bottom: 1.2rem; }
+  .rsvp-type-title { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 300; margin-bottom: 0.4rem; }
+  .rsvp-type-sub { font-size: 0.85rem; color: var(--text-light); margin-bottom: 2rem; line-height: 1.6; }
+
+  input[type="text"], input[type="email"], input[type="tel"], select, textarea { font-family: 'Jost', sans-serif; font-size: 0.88rem; color: var(--text); background: var(--cream); border: 1px solid var(--gold-pale); padding: 0.85rem 1.1rem; outline: none; transition: border-color 0.3s; width: 100%; -webkit-appearance: none; }
+  input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+  textarea { resize: vertical; min-height: 90px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-light); margin-bottom: 0.4rem; }
+
+  .radio-group { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .radio-option { flex: 1; min-width: 120px; position: relative; }
+  .radio-option input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .radio-option label { display: block; text-align: center; padding: 0.9rem; border: 1px solid var(--gold-pale); cursor: pointer; transition: all 0.25s; font-size: 0.83rem; color: var(--text-light); text-transform: none; letter-spacing: 0; }
+  .radio-option input:checked + label { background: var(--gold); color: var(--white); border-color: var(--gold); }
+
+  .guest-section { background: var(--cream); padding: 1.5rem; margin-bottom: 1rem; position: relative; }
+  .guest-section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--text); margin-bottom: 1rem; }
+  .remove-guest { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-light); cursor: pointer; font-size: 1rem; transition: color 0.2s; }
+  .remove-guest:hover { color: #c0392b; }
+
+  .add-guest-btn { background: none; border: 1px dashed var(--gold-pale); color: var(--text-light); font-family: 'Jost', sans-serif; font-size: 0.78rem; letter-spacing: 0.1em; padding: 0.8rem; width: 100%; cursor: pointer; transition: all 0.3s; margin-bottom: 1.5rem; }
+  .add-guest-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .form-divider { border: none; border-top: 1px solid var(--gold-pale); margin: 1.5rem 0; }
+
+  .success-msg { text-align: center; padding: 3rem 2rem; display: none; }
+  .success-msg.show { display: block; }
+  .success-icon { font-size: 2.5rem; color: var(--gold); margin-bottom: 1rem; }
+  .success-msg h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; margin-bottom: 0.8rem; }
+  .success-msg p { color: var(--text-light); line-height: 1.7; font-size: 0.9rem; }
+
+  .attendance-checks { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 0.5rem; }
+  .check-option { display: flex; align-items: center; gap: 0.5rem; background: var(--white); border: 1px solid var(--gold-pale); padding: 0.7rem 1rem; cursor: pointer; transition: all 0.2s; font-size: 0.85rem; color: var(--text-light); flex: 1; min-width: 130px; }
+  .check-option:hover { border-color: var(--gold); }
+  .check-option input[type="checkbox"] { accent-color: var(--gold); width: 16px; height: 16px; cursor: pointer; flex-shrink: 0; }
+  .check-option:has(input:checked) { background: var(--gold-pale); border-color: var(--gold); color: var(--text); }
+
+  footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--gold-pale); font-size: 0.72rem; letter-spacing: 0.15em; color: var(--text-light); }
+  footer span { color: var(--gold); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp  { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes scrollPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  /* RESPONSIVE */
+  @media (max-width: 620px) {
+    nav { gap: 1rem; font-size: 0.6rem; flex-wrap: wrap; }
+    .program-grid::before { left: 28px; }
+    .program-item { grid-template-columns: 60px 1fr !important; }
+    .program-item.left .program-content, .program-item.right .program-content { grid-column: 2 !important; text-align: left !important; }
+    .program-item.left .program-time, .program-item.right .program-time { grid-column: 1 !important; }
+    .program-empty { display: none !important; }
+    .form-row { grid-template-columns: 1fr; }
+    .rsvp-form { padding: 2rem 1.2rem; }
+    .gifts-box { padding: 2rem 1.2rem; }
+    .hero-countdown { gap: 1.2rem; }
+    .code-input { width: 180px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#programma">Programma</a>
+  <a href="#menu" id="nav-menu">Menu</a>
+  <a href="#praktisch">Praktisch</a>
+  <a href="#cadeaus">Cadeaus</a>
+  <a href="#rsvp">RSVP</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="hero">
+  <div class="hero-ornament">✦ &nbsp; Wij gaan trouwen &nbsp; ✦</div>
+
+  <h1>Lisa <em>&</em> Eric</h1>
+
+  <div class="hero-divider"><span>♡</span></div>
+  <p class="hero-date">Vrijdag 4 september 2026</p>
+  <p class="hero-location">Kasteel De Wittenburg · Wassenaar</p>
+
+  <div class="hero-countdown" id="countdown">
+    <div class="countdown-item"><span class="countdown-num" id="cd-days">—</span><span class="countdown-label">Dagen</span></div>
+    <div class="countdown-item"><span class="countdown-num" id="cd-hours">—</span><span class="countdown-label">Uren</span></div>
+    <div class="countdown-item"><span class="countdown-num" id="cd-mins">—</span><span class="countdown-label">Minuten</span></div>
+    <div class="countdown-item"><span class="countdown-num" id="cd-secs">—</span><span class="countdown-label">Seconden</span></div>
+  </div>
+
+  <!-- CODE GATE -->
+  <div class="code-gate-hero" id="code-gate">
+    <p>Vul jouw persoonlijke uitnodigingscode in<br>om de website te bekijken.</p>
+    <div class="code-input-wrap">
+      <input type="text" class="code-input" id="invite-code" placeholder="JOUW CODE" maxlength="14" autocomplete="off" autocorrect="off" spellcheck="false">
+      <button class="btn" onclick="checkCode()">Bekijk website →</button>
+    </div>
+    <p class="code-error" id="code-error">Ongeldige code — controleer je uitnodiging.</p>
+    <p class="code-hint">Geen code? Stuur een mail naar <a href="/cdn-cgi/l/email-protection#e18d889280cf84938882d3d1d3d7a1868c80888dcf828e8c"><span class="__cf_email__" data-cfemail="8de1e4feeca3e8ffe4eebfbdbfbbcdeae0ece4e1a3eee2e0">[email&#160;protected]</span></a></p>
+  </div>
+
+  <div class="scroll-hint" id="scroll-hint" style="display:none;">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ══ SITE CONTENT ══ -->
+<div id="site-content">
+
+  <!-- Welcome -->
+  <div class="welcome-banner">
+    <div class="guest-type-pill" id="welcome-pill">—</div>
+    <h2 id="welcome-title">Van harte welkom!</h2>
+    <p id="welcome-text"></p>
+  </div>
+
+  <!-- ── PROGRAMMA ── -->
+  <section class="content-section" id="programma">
+    <p class="section-label">De grote dag</p>
+    <h2 class="section-title">Het programma</h2>
+    <p class="section-subtitle" id="prog-sub">Een dag vol mooie momenten.</p>
+    <div class="ornament-line"><span>✦</span></div>
+
+    <div class="program-wrap">
+
+      <!-- DAGGAST programma -->
+      <div id="prog-dag">
+        <div class="program-grid">
+
+          <div class="program-item left">
+            <div class="program-content">
+              <h3>Ontvangst</h3>
+              <p>Welkom op Kasteel De Wittenburg. Geniet van een drankje en de prachtige tuinen.</p>
+            </div>
+            <div class="program-time"><div class="time-dot"></div><span class="time-text">14:30</span></div>
+            <div class="program-empty"></div>
+          </div>
+
+          <div class="program-item right">
+            <div class="program-empty"></div>
+            <div class="program-time"><div class="time-dot"></div><span class="time-text">15:00</span></div>
+            <div class="program-content">
+              <h3>Huwelijksceremonie</h3>
+              <p>De officiële verbintenis van Lisa &amp; Eric in de historische zaal van het kasteel.</p>
+            </div>
+          </div>
+
+          <div class="program-item left">
+            <div class="program-content">
+              <h3>Receptie</h3>
+              <p>Proosten op het nieuwe echtpaar op het terras van Kasteel De Wittenburg.</p>
+            </div>
+            <div class="program-time"><div class="time-dot"></div><span class="time-text">16:00</span></div>
+            <div class="program-empty"></div>
+          </div>
+
+          <div class="program-item right">
+            <div class="program-empty"></div>
+            <div class="program-time"><div class="time-dot"></div><span class="time-text">18:00</span></div>
+            <div class="program-content">
+              <h3>Diner</h3>
+              <p>Een feestelijk driegangendiner in de grand dining room van het kasteel.</p>
+            </div>
+          </div>
+
+          <div style="grid-column:1/-1; padding:1rem 0;">
+            <div class="program-divider"><span>✦ &nbsp; Het feest begint &nbsp; ✦</span></div>
+          </div>
+
+          <div class="program-item left special">
+            <div class="program-content">
+              <h3>Verzamelen in de feestzaal</h3>
+              <p>De avondgasten worden verwelkomd. Samen verzamelen we voor het openingsmoment van de avond.</p>
+            </div>
+            <div class="program-time"><div class="time-dot highlight"></div><span class="time-text">20:30</span></div>
+            <div class="program-empty"></div>
+          </div>
+
+          <div class="program-item right special">
+            <div class="program-empty"></div>
+            <div class="program-time"><div class="time-dot highlight"></div><span class="time-text">20:45</span></div>
+            <div class="program-content">
+              <h3>Openingsdans ♡</h3>
+              <p>Het feest wordt officieel geopend met de eerste dans van Lisa &amp; Eric als echtpaar. Zorg dat je op tijd aanwezig bent!</p>
+            </div>
+          </div>
+
+          <div class="program-item left">
+            <div class="program-content">
+              <h3>Feest &amp; dans</h3>
+              <p>De dansvloer is van jullie — live muziek, dans en de mooiste herinneringen de hele avond.</p>
+            </div>
+            <div class="program-time"><div class="time-dot"></div><span class="time-text">20:45–00:30</span></div>
+            <div class="program-empty"></div>
+          </div>
+
+          <div class="program-item right">
+            <div class="program-empty"></div>
+            <div class="program-time"><div class="time-dot"></div><span class="time-text">00:30</span></div>
+            <div class="program-content">
+              <h3>Einde feest</h3>
+              <p>Veilig naar huis — en tot gauw!</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- AVONDGAST programma -->
+      <div id="prog-avond" style="display:none;">
+        <div class="program-grid">
+
+          <div class="program-item left special">
+            <div class="program-content">
+              <h3>Welkom &amp; verzamelen</h3>
+              <p>Welkom op Kasteel De Wittenburg! Kom naar de feestzaal — het openingsmoment staat op het punt te beginnen.</p>
+            </div>
+            <div class="program-time"><div class="time-dot highlight"></div><span class="time-text">20:30</span></div>
+            <div class="program-empty"></div>
+          </div>
+
+          <div class="program-item right special">
+            <div class="program-empty"></div>
+            <div class="program-time"><div class="time-dot highlight"></div><span class="time-text">20:45</span></div>
+            <div class="program-content">
+              <h3>Openingsdans ♡</h3>
+              <p>Het feest wordt geopend met de allereerste dans van Lisa &amp; Eric als echtpaar. <strong>Wees op tijd</strong> — dit wil je niet missen!</p>
+            </div>
+          </div>
+
+          <div class="program-item left">
+            <div class="program-content">
+              <h3>Feest &amp; dans</h3>
+              <p>De dansvloer is van jullie — live muziek, dans en de mooiste herinneringen tot in de nacht.</p>
+            </div>
+            <div class="program-time"><div class="time-dot"></div><span class="time-text">20:45–00:30</span></div>
+            <div class="program-empty"></div>
+          </div>
+
+          <div class="program-item right">
+            <div class="program-empty"></div>
+            <div class="program-time"><div class="time-dot"></div><span class="time-text">00:30</span></div>
+            <div class="program-content">
+              <h3>Einde feest</h3>
+              <p>Veilig naar huis — en tot gauw!</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── MENU (alleen daggasten) ── -->
+  <div id="section-menu" class="menu-bg" style="display:none;">
+    <div class="menu-inner" id="menu">
+      <p class="section-label">Culinair</p>
+      <h2 class="section-title">Het menu</h2>
+      <p class="section-subtitle">Een zorgvuldig samengesteld menu voor deze bijzondere dag, bereid door de chef van Kasteel De Wittenburg.</p>
+      <div class="ornament-line"><span>✦</span></div>
+
+      <div class="menu-grid">
+        <div class="menu-card">
+          <p class="menu-card-label">Amuse</p>
+          <div class="menu-item"><p class="menu-item-name">Oesters met mignonette</p><p class="menu-item-desc">Verse Zeeuwse oesters met rode wijnazijn mignonette</p></div>
+          <div class="menu-item"><p class="menu-item-name">Truffelschuim</p><p class="menu-item-desc">Op een knapperig briochetoastje</p></div>
+        </div>
+        <div class="menu-card">
+          <p class="menu-card-label">Voorgerecht</p>
+          <div class="menu-item"><p class="menu-item-name">Coquilles St. Jacques</p><p class="menu-item-desc">Met bloemkoolcrème, hazelnoot en beurre blanc</p></div>
+          <div class="menu-item"><p class="menu-item-name">Burrata ✦ vegetarisch</p><p class="menu-item-desc">Met heirloom tomaten, basilicumolie en grissini</p></div>
+        </div>
+        <div class="menu-card">
+          <p class="menu-card-label">Hoofdgerecht</p>
+          <div class="menu-item"><p class="menu-item-name">Kalfsentrecôte</p><p class="menu-item-desc">Met truffelaardappelpurée, seizoensgroenten en jus de veau</p></div>
+          <div class="menu-item"><p class="menu-item-name">Wilde zalmfilet</p><p class="menu-item-desc">Met venkelcrème, pommes dauphine en citroenbeurre blanc</p></div>
+        </div>
+        <div class="menu-card">
+          <p class="menu-card-label">Dessert</p>
+          <div class="menu-item"><p class="menu-item-name">Bruidstaart</p><p class="menu-item-desc">Een feestelijk gesneden moment — met champagne</p></div>
+          <div class="menu-item"><p class="menu-item-name">Crème brûlée</p><p class="menu-item-desc">Met vanille en een coulis van seizoensfruit</p></div>
+        </div>
+      </div>
+
+      <p style="text-align:center; color:var(--text-light); font-size:0.8rem; margin-top:2rem; line-height:1.7;">
+        Allergie of dieetwens? Geef dit door bij je RSVP — wij zorgen voor een passend alternatief.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── PRAKTISCH ── -->
+  <section class="content-section" id="praktisch">
+    <p class="section-label">Handig om te weten</p>
+    <h2 class="section-title">Praktische info</h2>
+    <p class="section-subtitle">Alles wat je nodig hebt voor een zorgeloze dag.</p>
+    <div class="ornament-line"><span>✦</span></div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-icon">📍</div>
+        <h3>Locatie</h3>
+        <p>Kasteel De Wittenburg<br>Wittenburgerlaan 4<br>2243 GC Wassenaar<br><br><a href="https://maps.google.com/?q=Kasteel+De+Wittenburg+Wassenaar" target="_blank">Bekijk op Google Maps →</a></p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🚗</div>
+        <h3>Parkeren</h3>
+        <p>Er is gratis parkeergelegenheid op het terrein van het kasteel. Volg de borden bij aankomst.<br><br>Met de trein? Station Wassenaar ligt op circa 10 minuten rijden.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">👗</div>
+        <h3>Dresscode</h3>
+        <p>Feestelijk &amp; elegant. Denk aan cocktailjurken, gala en mooie pakken.<br><br>De receptie is deels buiten — kies comfortabel schoeisel.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🏨</div>
+        <h3>Overnachten</h3>
+        <p>In de omgeving zijn diverse hotels beschikbaar. Wij raden aan vroeg te boeken.<br><br>Tips: hotels in Wassenaar of Den Haag (±15 min).</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">📸</div>
+        <h3>Foto's</h3>
+        <p>We hebben een professionele fotograaf. Tijdens de ceremonie vragen we iedereen de telefoon even weg te steken.<br><br>Na de bruiloft delen we de foto's via een gedeeld album.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">✉️</div>
+        <h3>Contact</h3>
+        <p>Vragen of bijzonderheden?<br>Mail ons op<br><a href="/cdn-cgi/l/email-protection#701c1903115e150219134240424630171d11191c5e131f1d"><span class="__cf_email__" data-cfemail="0e62677d6f206b7c676d3c3e3c384e69636f6762206d6163">[email&#160;protected]</span></a><br><br>We helpen je graag verder!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CADEAUS ── -->
+  <div class="gifts-bg" id="cadeaus">
+    <div class="gifts-inner">
+      <p class="section-label">Cadeau</p>
+      <h2 class="section-title">Lieve gasten</h2>
+      <p class="section-subtitle">Jullie aanwezigheid op onze grote dag is het mooiste cadeau dat we ons kunnen wensen.</p>
+      <div class="ornament-line"><span>✦</span></div>
+
+      <div class="gifts-box">
+        <p>Mochten jullie ons toch willen verwennen, dan stellen wij dat zeer op prijs. Het mooiste cadeau is jullie aanwezigheid — maar een <strong>envelop op de bruiloft zelf</strong> wordt door ons met open armen ontvangen.</p>
+        <div style="font-size:2rem; color:var(--gold); margin: 1.2rem 0;">✉️</div>
+        <p style="font-size:0.92rem; color:var(--brown); font-family:'Cormorant Garamond',serif; font-size:1.2rem; margin-bottom:0.8rem; font-style:italic;">Een envelop op de dag zelf</p>
+        <p style="font-size:0.82rem; color:var(--text-light); line-height:1.8;">Er staat een mooie doos klaar op de bruiloft waar je je envelop kwijt kunt. Alvast heel hartelijk dank voor jullie generositeit en liefde. ♡</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RSVP ── -->
+  <div class="rsvp-bg" id="rsvp">
+    <div class="rsvp-inner">
+      <p class="section-label">Aanmelden</p>
+      <h2 class="section-title">RSVP</h2>
+      <p class="section-subtitle">Laat ons uiterlijk <strong>1 juni 2026</strong> weten of je erbij kunt zijn.</p>
+      <div class="ornament-line"><span>✦</span></div>
+
+      <div class="rsvp-form">
+
+        <div id="rsvp-step-form">
+          <span class="rsvp-badge" id="rsvp-badge">—</span>
+          <h3 class="rsvp-type-title">Jouw aanmelding</h3>
+          <p class="rsvp-type-sub" id="rsvp-sub">Vul je gegevens hieronder in.</p>
+
+          <!-- ── Hoofdgast gegevens ── -->
+          <hr class="form-divider">
+          <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:1rem; color:var(--text);">Jouw gegevens</p>
+
+          <div class="form-row">
+            <div class="form-group" style="margin:0;"><label>Voornaam *</label><input type="text" id="g-first" placeholder="Voornaam"></div>
+            <div class="form-group" style="margin:0;"><label>Achternaam *</label><input type="text" id="g-last" placeholder="Achternaam"></div>
+          </div>
+          <div class="form-row" style="margin-top:1rem;">
+            <div class="form-group" style="margin:0;"><label>E-mailadres *</label><input type="email" id="g-email" placeholder="naam@email.nl"></div>
+            <div class="form-group" style="margin:0;"><label>Telefoonnummer</label><input type="tel" id="g-phone" placeholder="+31 6 00000000"></div>
+          </div>
+
+          <!-- ── Aanwezigheid hoofdgast (dag) ── -->
+          <div id="attendance-dag-wrap" style="display:none; margin-top:1.5rem;">
+            <hr class="form-divider">
+            <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem; color:var(--text);">Aanwezigheid overdag</p>
+            <p style="font-size:0.8rem; color:var(--text-light); margin-bottom:1rem;">Geef aan bij welke onderdelen je aanwezig bent.</p>
+            <div class="attendance-checks">
+              <label class="check-option"><input type="checkbox" name="dag-ontvangst" id="dag-ontvangst"><span>Ontvangst <em style="color:var(--text-light);font-size:0.78rem;">(14:30)</em></span></label>
+              <label class="check-option"><input type="checkbox" name="dag-ceremonie" id="dag-ceremonie"><span>Ceremonie <em style="color:var(--text-light);font-size:0.78rem;">(15:00)</em></span></label>
+              <label class="check-option"><input type="checkbox" name="dag-receptie" id="dag-receptie"><span>Receptie <em style="color:var(--text-light);font-size:0.78rem;">(16:00)</em></span></label>
+              <label class="check-option"><input type="checkbox" name="dag-diner" id="dag-diner"><span>Diner <em style="color:var(--text-light);font-size:0.78rem;">(18:00)</em></span></label>
+            </div>
+          </div>
+
+          <!-- ── Aanwezigheid avond (dag én avondgasten) ── -->
+          <div id="attendance-avond-wrap" style="display:none; margin-top:1.5rem;">
+            <hr class="form-divider">
+            <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem; color:var(--text);">Aanwezigheid avondfeest</p>
+            <p style="font-size:0.8rem; color:var(--text-light); margin-bottom:1rem;">Ben je aanwezig bij het feest?</p>
+            <div class="attendance-checks">
+              <label class="check-option"><input type="checkbox" name="avond-feest" id="avond-feest"><span>Feest <em style="color:var(--text-light);font-size:0.78rem;">(20:30)</em></span></label>
+            </div>
+          </div>
+
+          <!-- ── Partner sectie ── -->
+          <div id="partner-wrap" style="display:none; margin-top:1.5rem;">
+            <hr class="form-divider">
+            <div class="form-group" style="margin-bottom:0.8rem;">
+              <label>Neem je een partner mee?</label>
+              <div class="radio-group" style="margin-bottom:0;">
+                <div class="radio-option"><input type="radio" name="partner" id="partner-ja" value="ja"><label for="partner-ja">Ja, ik neem een partner mee</label></div>
+                <div class="radio-option"><input type="radio" name="partner" id="partner-nee" value="nee" checked><label for="partner-nee">Nee, ik kom alleen</label></div>
+              </div>
+            </div>
+
+            <div id="partner-details" style="display:none; background:var(--cream); padding:1.5rem; margin-top:0.5rem;">
+              <p style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--text); margin-bottom:1rem;">Gegevens partner</p>
+              <div class="form-row">
+                <div class="form-group" style="margin:0;"><label>Voornaam *</label><input type="text" id="p-first" placeholder="Voornaam"></div>
+                <div class="form-group" style="margin:0;"><label>Achternaam *</label><input type="text" id="p-last" placeholder="Achternaam"></div>
+              </div>
+
+              <!-- Partner aanwezigheid dag -->
+              <div id="partner-attendance-dag-wrap" style="display:none; margin-top:1.2rem;">
+                <p style="font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.6rem;">Aanwezigheid partner overdag</p>
+                <div class="attendance-checks">
+                  <label class="check-option"><input type="checkbox" name="p-dag-ontvangst" id="p-dag-ontvangst"><span>Ontvangst</span></label>
+                  <label class="check-option"><input type="checkbox" name="p-dag-ceremonie" id="p-dag-ceremonie"><span>Ceremonie</span></label>
+                  <label class="check-option"><input type="checkbox" name="p-dag-receptie" id="p-dag-receptie"><span>Receptie</span></label>
+                  <label class="check-option"><input type="checkbox" name="p-dag-diner" id="p-dag-diner"><span>Diner</span></label>
+                </div>
+              </div>
+
+              <!-- Partner aanwezigheid avond -->
+              <div id="partner-attendance-avond-wrap" style="display:none; margin-top:1.2rem;">
+                <p style="font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.6rem;">Aanwezigheid partner avondfeest</p>
+                <div class="attendance-checks">
+                  <label class="check-option"><input type="checkbox" name="p-avond-feest" id="p-avond-feest"><span>Feest <em style="color:var(--text-light);font-size:0.78rem;">(20:30)</em></span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Niet aanwezig ── -->
+          <div id="attendance-nee-wrap" style="display:none; margin-top:1.5rem;">
+            <hr class="form-divider">
+            <p style="font-size:0.88rem; color:var(--text-light); line-height:1.7;">Wat jammer dat je er niet bij kunt zijn. Laat je naam en e-mailadres achter zodat we je kunnen laten weten hoe het was. ♡</p>
+          </div>
+
+          <!-- ── Aanwezigheid hoofd toggle ── -->
+          <div style="margin-top:1.5rem;">
+            <hr class="form-divider">
+            <div class="form-group">
+              <label>Ben je aanwezig? *</label>
+              <div class="radio-group">
+                <div class="radio-option"><input type="radio" name="attendance" id="att-yes" value="ja" checked><label for="att-yes">✓ &nbsp; Ik ben erbij!</label></div>
+                <div class="radio-option"><input type="radio" name="attendance" id="att-no" value="nee"><label for="att-no">✗ &nbsp; Helaas verhinderd</label></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:0.5rem;">
+            <label>Aanvullend bericht (optioneel)</label>
+            <textarea id="rsvp-message" placeholder="Heb je nog iets te melden? Laat het ons weten."></textarea>
+          </div>
+
+          <div style="text-align:center; margin-top:1.5rem;">
+            <button class="btn" onclick="submitRSVP()">Aanmelding bevestigen ✦</button>
+          </div>
+        </div>
+
+        <div id="rsvp-success" class="success-msg">
+          <div class="success-icon">♡</div>
+          <h3>Bedankt!</h3>
+          <p id="success-text">We kijken er enorm naar uit om deze bijzondere dag met jou te vieren!</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Lisa de Miranda <span>✦</span> Eric van Dam</p>
+    <p style="margin-top:0.5rem; font-size:0.68rem;">4 september 2026 &nbsp;·&nbsp; Kasteel De Wittenburg, Wassenaar</p>
+    <p style="margin-top:0.5rem; font-size:0.68rem;">Vragen? <a href="/cdn-cgi/l/email-protection#5e32372d3f703b2c373d6c6e6c681e39333f3732703d3133" style="color:var(--gold); text-decoration:none;"><span class="__cf_email__" data-cfemail="0b6762786a256e796268393b393d4b6c666a626725686466">[email&#160;protected]</span></a></p>
+  </footer>
+
+</div><!-- /#site-content -->
+
+<script>
+/* ══════════════════════════════════════════
+   CODES — 4 codes met type + partner optie
+   dag_plus1   = daggast mét partner
+   dag         = daggast zonder partner
+   avond_plus1 = avondgast mét partner
+   avond       = avondgast zonder partner
+══════════════════════════════════════════ */
+const CODES = {
+  'DAGPLUS2026'  : { type: 'dag',   partner: true  },
+  'DAG2026'      : { type: 'dag',   partner: false },
+  'AVONDPLUS26'  : { type: 'avond', partner: true  },
+  'AVOND2026'    : { type: 'avond', partner: false },
+};
+
+let currentType    = null;
+let currentPartner = false;
+
+/* ── Code check ── */
+function checkCode() {
+  const val   = document.getElementById('invite-code').value.trim().toUpperCase();
+  const input = document.getElementById('invite-code');
+  const err   = document.getElementById('code-error');
+  const entry = CODES[val];
+
+  if (!entry) {
+    input.classList.add('error');
+    err.style.display = 'block';
+    return;
+  }
+
+  input.classList.remove('error');
+  err.style.display = 'none';
+  currentType    = entry.type;
+  currentPartner = entry.partner;
+  unlockSite(entry.type, entry.partner);
+}
+
+document.getElementById('invite-code').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkCode();
+});
+
+/* ── Unlock & personalise ── */
+function unlockSite(type, hasPartner) {
+  const isDay = type === 'dag';
+
+  document.getElementById('code-gate').style.display   = 'none';
+  document.getElementById('scroll-hint').style.display = 'flex';
+  document.getElementById('main-nav').classList.add('visible');
+
+  const site = document.getElementById('site-content');
+  site.classList.add('unlocked');
+  requestAnimationFrame(() => requestAnimationFrame(() => site.classList.add('fade-in')));
+
+  // Welcome banner
+  document.getElementById('welcome-pill').textContent  = isDay ? 'Daggast' : 'Avondgast';
+  document.getElementById('welcome-title').textContent = isDay ? 'Welkom, daggast!' : 'Welkom, avondgast!';
+  document.getElementById('welcome-text').textContent  = isDay
+    ? 'Je bent uitgenodigd voor de volledige dag — van ontvangst en ceremonie tot diner en het avondfeest. We kunnen niet wachten om deze dag met jou te vieren!'
+    : 'Je bent uitgenodigd voor het avondfeest op Kasteel De Wittenburg. Het feest start om 20:30 — zorg dat je er op tijd bij bent voor de openingsdans om 20:45!';
+
+  // Program
+  document.getElementById('prog-dag').style.display   = isDay ? 'block' : 'none';
+  document.getElementById('prog-avond').style.display = isDay ? 'none'  : 'block';
+  document.getElementById('prog-sub').textContent     = isDay
+    ? 'Van ontvangst tot de laatste dans — een dag vol mooie momenten.'
+    : 'Alles wat je moet weten voor een onvergetelijke avond op Kasteel De Wittenburg.';
+
+  // Menu: dag only
+  document.getElementById('section-menu').style.display = isDay ? 'block' : 'none';
+  document.getElementById('nav-menu').style.display     = isDay ? ''      : 'none';
+
+  // RSVP labels
+  document.getElementById('rsvp-badge').textContent = isDay ? 'Daggast' : 'Avondgast';
+  document.getElementById('rsvp-sub').textContent   = isDay
+    ? 'Je bent uitgenodigd voor de volledige dag. Laat ons voor 1 juni 2026 weten of je erbij bent.'
+    : 'Je bent uitgenodigd voor het avondfeest. Laat ons voor 1 juni 2026 weten of je erbij bent.';
+
+  // Show/hide attendance blocks
+  document.getElementById('attendance-dag-wrap').style.display   = isDay ? 'block' : 'none';
+  document.getElementById('attendance-avond-wrap').style.display  = 'block';
+
+  // Partner section
+  document.getElementById('partner-wrap').style.display = hasPartner ? 'block' : 'none';
+  if (hasPartner) {
+    document.getElementById('partner-attendance-dag-wrap').style.display  = isDay ? 'block' : 'none';
+    document.getElementById('partner-attendance-avond-wrap').style.display = 'block';
+    document.getElementById('partner-nee').checked = true;
+  }
+
+  // Partner radio toggle
+  document.querySelectorAll('input[name="partner"]').forEach(r => {
+    r.addEventListener('change', () => {
+      document.getElementById('partner-details').style.display =
+        document.querySelector('input[name="partner"]:checked').value === 'ja' ? 'block' : 'none';
+    });
+  });
+
+  // Attendance toggle (aanwezig / niet aanwezig)
+  document.querySelectorAll('input[name="attendance"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const aanwezig = document.querySelector('input[name="attendance"]:checked').value === 'ja';
+      document.getElementById('attendance-dag-wrap').style.display   = (aanwezig && isDay) ? 'block' : 'none';
+      document.getElementById('attendance-avond-wrap').style.display = aanwezig ? 'block' : 'none';
+      document.getElementById('partner-wrap').style.display          = (aanwezig && hasPartner) ? 'block' : 'none';
+      document.getElementById('attendance-nee-wrap').style.display   = aanwezig ? 'none' : 'block';
+    });
+  });
+
+  initScrollObserver();
+
+  setTimeout(() => {
+    document.getElementById('site-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 350);
+}
+
+/* ── Submit ── */
+async function submitRSVP() {
+  const first = document.getElementById('g-first').value.trim();
+  const last  = document.getElementById('g-last').value.trim();
+  const email = document.getElementById('g-email').value.trim();
+  const phone = document.getElementById('g-phone').value.trim();
+  const msg   = document.getElementById('rsvp-message').value.trim();
+  const aanwezig = document.querySelector('input[name="attendance"]:checked').value;
+  const isDay = currentType === 'dag';
+
+  if (!first || !last) { alert('Vul je voor- en achternaam in.'); return; }
+  if (!email || !email.includes('@')) { alert('Vul een geldig e-mailadres in.'); return; }
+
+  // Build summary
+  let summary = '';
+
+  if (aanwezig === 'ja') {
+    // Dag onderdelen
+    if (isDay) {
+      const dagOnderdelen = [];
+      if (document.getElementById('dag-ontvangst').checked) dagOnderdelen.push('Ontvangst (14:30)');
+      if (document.getElementById('dag-ceremonie').checked) dagOnderdelen.push('Ceremonie (15:00)');
+      if (document.getElementById('dag-receptie').checked)  dagOnderdelen.push('Receptie (16:00)');
+      if (document.getElementById('dag-diner').checked)     dagOnderdelen.push('Diner (18:00)');
+      summary += `\n🌞 Aanwezig overdag: ${dagOnderdelen.length ? dagOnderdelen.join(', ') : 'Geen onderdelen geselecteerd'}`;
+    }
+
+    // Avond
+    const avondAanwezig = document.getElementById('avond-feest').checked;
+    summary += `\n🌙 Feest (20:30): ${avondAanwezig ? 'Ja' : 'Nee'}`;
+
+    // Partner
+    if (currentPartner) {
+      const partnerKeuze = document.querySelector('input[name="partner"]:checked').value;
+      if (partnerKeuze === 'ja') {
+        const pFirst = document.getElementById('p-first').value.trim();
+        const pLast  = document.getElementById('p-last').value.trim();
+        summary += `\n\n👫 Partner: ${pFirst} ${pLast}`;
+        if (isDay) {
+          const pDagOnderdelen = [];
+          if (document.getElementById('p-dag-ontvangst').checked) pDagOnderdelen.push('Ontvangst');
+          if (document.getElementById('p-dag-ceremonie').checked) pDagOnderdelen.push('Ceremonie');
+          if (document.getElementById('p-dag-receptie').checked)  pDagOnderdelen.push('Receptie');
+          if (document.getElementById('p-dag-diner').checked)     pDagOnderdelen.push('Diner');
+          summary += `\n   Overdag: ${pDagOnderdelen.length ? pDagOnderdelen.join(', ') : 'Geen onderdelen'}`;
+        }
+        const pAvond = document.getElementById('p-avond-feest').checked;
+        summary += `\n   Feest: ${pAvond ? 'Ja' : 'Nee'}`;
+      } else {
+        summary += '\n\n👤 Partner: Komt niet mee';
+      }
+    }
+  }
+
+  const guestType = isDay ? 'Daggast' : 'Avondgast';
+
+  // ── Email naar Lisa & Eric via EmailJS / Formspree ──
+  // Hieronder staat een Formspree-implementatie.
+  // Vervang 'YOUR_FORMSPREE_ID' met jouw eigen Formspree endpoint.
+  // Maak gratis een account aan op https://formspree.io
+  const FORMSPREE_ID = 'YOUR_FORMSPREE_ID'; // ← vervang dit
+
+  const payload = {
+    _subject: `RSVP Bruiloft Lisa & Eric — ${first} ${last} (${guestType})`,
+    naam: `${first} ${last}`,
+    email: email,
+    telefoon: phone || '—',
+    type: guestType,
+    aanwezig: aanwezig === 'ja' ? 'Ja' : 'Nee',
+    details: summary || '—',
+    bericht: msg || '—',
+    _replyto: email,
+  };
+
+  // Stuur naar lisa.d.m@live.nl via Formspree
+  try {
+    if (FORMSPREE_ID !== 'YOUR_FORMSPREE_ID') {
+      await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    }
+  } catch(e) { console.warn('Formspree niet bereikbaar:', e); }
+
+  // Bevestigingsmail naar gast — via mailto fallback (of vervang door eigen SMTP/emailservice)
+  // Voor een echte bevestigingsmail heb je een backend of dienst als EmailJS nodig.
+  // Zie: https://www.emailjs.com  (gratis tier beschikbaar)
+  // Voorbeeld EmailJS-integratie staat als commentaar hieronder:
+  /*
+  emailjs.send('SERVICE_ID', 'TEMPLATE_ID', {
+    to_email: email,
+    to_name: first,
+    guest_type: guestType,
+    summary: summary,
+    website_url: window.location.href,
+  });
+  */
+
+  // Succes-bericht tonen
+  if (aanwezig === 'nee') {
+    showSuccess('Wat jammer dat je er niet bij kunt zijn. We denken aan je op onze grote dag. ♡');
+  } else {
+    showSuccess('We kijken er enorm naar uit om deze bijzondere dag met jou te vieren. Je ontvangt binnenkort een bevestiging per e-mail. ♡');
+  }
+}
+
+function showSuccess(msg) {
+  document.getElementById('rsvp-step-form').style.display = 'none';
+  const s = document.getElementById('rsvp-success');
+  s.classList.add('show');
+  document.getElementById('success-text').textContent = msg;
+}
+
+/* ── Countdown ── */
+function updateCountdown() {
+  const target = new Date('2026-09-04T14:30:00');
+  const diff   = target - new Date();
+  if (diff <= 0) {
+    document.getElementById('countdown').innerHTML =
+      '<p style="font-family:\'Cormorant Garamond\',serif;font-size:1.5rem;color:var(--gold);font-style:italic;">Het is zover! ♡</p>';
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent  = String(d).padStart(2,'0');
+  document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+  document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* ── Scroll observer ── */
+function initScrollObserver() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.program-item, .menu-card, .info-card').forEach(el => obs.observe(el));
+}
+
+/* ── Nav hide on hero ── */
+const heroEl = document.getElementById('hero');
+const navEl  = document.getElementById('main-nav');
+const navObs = new IntersectionObserver(([e]) => {
+  if (!document.getElementById('site-content').classList.contains('unlocked')) return;
+  navEl.classList.toggle('visible', !e.isIntersecting);
+}, { threshold: 0 });
+navObs.observe(heroEl);
+</script>
+</body>
+</html>
