@@ -147,35 +147,104 @@
   .ornament-line::before, .ornament-line::after { content: ''; width: 80px; height: 1px; background: linear-gradient(to right, transparent, var(--gold-pale)); }
   .ornament-line span { color: var(--gold-pale); font-size: 0.8rem; }
 
-  /* PROGRAM */
+  /* PROGRAM — desktop: zigzag, mobiel: single-column tijdlijn */
   .program-wrap { max-width: 860px; margin: 0 auto; }
-  .program-grid { position: relative; }
-  .program-grid::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold-pale) 8%, var(--gold-pale) 92%, transparent); transform: translateX(-50%); }
 
-  .program-item { display: grid; grid-template-columns: 1fr 70px 1fr; gap: 0.5rem; align-items: center; padding: 1.8rem 0; opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  /* ── Desktop tijdlijn (middenlijn) ── */
+  .program-grid { position: relative; }
+  .program-grid::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--gold-pale) 8%, var(--gold-pale) 92%, transparent);
+    transform: translateX(-50%);
+  }
+
+  .program-item {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 1.8rem 0;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
   .program-item.visible { opacity: 1; transform: none; }
 
   .program-item.left .program-content { text-align: right; grid-column: 1; }
-  .program-item.left .program-time   { grid-column: 2; }
-  .program-item.left .program-empty  { grid-column: 3; }
+  .program-item.left .program-time    { grid-column: 2; }
+  .program-item.left .program-empty   { grid-column: 3; }
   .program-item.right .program-empty  { grid-column: 1; }
   .program-item.right .program-time   { grid-column: 2; }
   .program-item.right .program-content{ grid-column: 3; text-align: left; }
 
-  .program-time { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
-  .time-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--gold); border: 2px solid var(--cream); box-shadow: 0 0 0 3px var(--gold-pale); flex-shrink: 0; }
-  .time-dot.highlight { background: var(--brown); box-shadow: 0 0 0 4px rgba(107,79,53,0.18); width: 16px; height: 16px; }
-  .time-text { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold); font-style: italic; white-space: nowrap; }
+  .program-time { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+
+  /* Hartje in plaats van stip */
+  .time-dot {
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--gold);
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 3px rgba(184,154,90,0.35));
+  }
+  .program-item.special .time-dot {
+    font-size: 1.25rem;
+    color: var(--brown);
+    filter: drop-shadow(0 0 4px rgba(107,79,53,0.3));
+  }
+
+  .time-text { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: var(--gold); font-style: italic; white-space: nowrap; }
 
   .program-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 400; color: var(--text); margin-bottom: 0.3rem; }
-  .program-content p { font-size: 0.83rem; color: var(--text-light); line-height: 1.6; }
+  .program-content p  { font-size: 0.83rem; color: var(--text-light); line-height: 1.6; }
 
   .program-item.special .program-content h3 { color: var(--brown); }
-  .program-item.special .time-text { color: var(--brown); }
+  .program-item.special .time-text           { color: var(--brown); }
 
   .program-divider { display: flex; align-items: center; gap: 1rem; padding: 0.5rem 0; margin: 0.5rem 0; }
   .program-divider::before, .program-divider::after { content: ''; flex: 1; height: 1px; background: var(--gold-pale); }
   .program-divider span { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
+
+  /* ── Mobiele tijdlijn (links uitgelijnd) ── */
+  @media (max-width: 620px) {
+    /* Middenlijn verplaatsen naar links */
+    .program-grid::before { left: 22px; transform: none; }
+
+    /* Elk item: [hart-kolom] [content-kolom] */
+    .program-item {
+      grid-template-columns: 44px 1fr !important;
+      grid-template-rows: auto auto;
+      gap: 0 0.8rem;
+      padding: 1.4rem 0;
+    }
+
+    /* Tijd-blok: altijd kolom 1, twee rijen hoog */
+    .program-item.left  .program-time,
+    .program-item.right .program-time {
+      grid-column: 1 !important;
+      grid-row: 1 / 3;
+      justify-content: flex-start;
+      padding-top: 0.1rem;
+    }
+
+    /* Content: altijd kolom 2 */
+    .program-item.left  .program-content,
+    .program-item.right .program-content {
+      grid-column: 2 !important;
+      grid-row: 1 / 3;
+      text-align: left !important;
+    }
+
+    /* Lege placeholder weghalen */
+    .program-empty { display: none !important; }
+
+    /* Tijd-tekst onder het hartje */
+    .program-time { flex-direction: column; align-items: center; gap: 0.25rem; }
+    .time-text    { font-size: 0.78rem; text-align: center; }
+  }
 
   /* MENU */
   .menu-bg { background: var(--cream-dark); }
@@ -283,14 +352,9 @@
   @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
   @keyframes scrollPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-  /* RESPONSIVE */
+  /* RESPONSIVE — overige elementen */
   @media (max-width: 620px) {
     nav { gap: 1rem; font-size: 0.6rem; flex-wrap: wrap; }
-    .program-grid::before { left: 28px; }
-    .program-item { grid-template-columns: 60px 1fr !important; }
-    .program-item.left .program-content, .program-item.right .program-content { grid-column: 2 !important; text-align: left !important; }
-    .program-item.left .program-time, .program-item.right .program-time { grid-column: 1 !important; }
-    .program-empty { display: none !important; }
     .form-row { grid-template-columns: 1fr; }
     .rsvp-form { padding: 2rem 1.2rem; }
     .gifts-box { padding: 2rem 1.2rem; }
@@ -373,13 +437,13 @@
               <h3>Ontvangst</h3>
               <p>Welkom op Kasteel De Wittenburg. Geniet van een drankje en de prachtige tuinen.</p>
             </div>
-            <div class="program-time"><div class="time-dot"></div><span class="time-text">14:30</span></div>
+            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">14:30</span></div>
             <div class="program-empty"></div>
           </div>
 
           <div class="program-item right">
             <div class="program-empty"></div>
-            <div class="program-time"><div class="time-dot"></div><span class="time-text">15:00</span></div>
+            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">15:00</span></div>
             <div class="program-content">
               <h3>Huwelijksceremonie</h3>
               <p>De officiële verbintenis van Lisa &amp; Eric in de historische zaal van het kasteel.</p>
@@ -391,13 +455,13 @@
               <h3>Receptie</h3>
               <p>Proosten op het nieuwe echtpaar op het terras van Kasteel De Wittenburg.</p>
             </div>
-            <div class="program-time"><div class="time-dot"></div><span class="time-text">16:00</span></div>
+            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">16:00</span></div>
             <div class="program-empty"></div>
           </div>
 
           <div class="program-item right">
             <div class="program-empty"></div>
-            <div class="program-time"><div class="time-dot"></div><span class="time-text">18:00</span></div>
+            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">18:00</span></div>
             <div class="program-content">
               <h3>Diner</h3>
               <p>Een feestelijk driegangendiner in de grand dining room van het kasteel.</p>
@@ -413,13 +477,13 @@
               <h3>Verzamelen in de feestzaal</h3>
               <p>De avondgasten worden verwelkomd. Samen verzamelen we voor het openingsmoment van de avond.</p>
             </div>
-            <div class="program-time"><div class="time-dot highlight"></div><span class="time-text">20:30</span></div>
+            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">20:30</span></div>
             <div class="program-empty"></div>
           </div>
 
           <div class="program-item right special">
             <div class="program-empty"></div>
-            <div class="program-time"><div class="time-dot highlight"></div><span class="time-text">20:45</span></div>
+            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">20:45</span></div>
             <div class="program-content">
               <h3>Openingsdans ♡</h3>
               <p>Het feest wordt officieel geopend met de eerste dans van Lisa &amp; Eric als echtpaar. Zorg dat je op tijd aanwezig bent!</p>
@@ -431,13 +495,13 @@
               <h3>Feest &amp; dans</h3>
               <p>De dansvloer is van jullie — live muziek, dans en de mooiste herinneringen de hele avond.</p>
             </div>
-            <div class="program-time"><div class="time-dot"></div><span class="time-text">20:45–00:30</span></div>
+            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">20:45–00:30</span></div>
             <div class="program-empty"></div>
           </div>
 
           <div class="program-item right">
             <div class="program-empty"></div>
-            <div class="program-time"><div class="time-dot"></div><span class="time-text">00:30</span></div>
+            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">00:30</span></div>
             <div class="program-content">
               <h3>Einde feest</h3>
               <p>Veilig naar huis — en tot gauw!</p>
@@ -456,13 +520,13 @@
               <h3>Welkom &amp; verzamelen</h3>
               <p>Welkom op Kasteel De Wittenburg! Kom naar de feestzaal — het openingsmoment staat op het punt te beginnen.</p>
             </div>
-            <div class="program-time"><div class="time-dot highlight"></div><span class="time-text">20:30</span></div>
+            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">20:30</span></div>
             <div class="program-empty"></div>
           </div>
 
           <div class="program-item right special">
             <div class="program-empty"></div>
-            <div class="program-time"><div class="time-dot highlight"></div><span class="time-text">20:45</span></div>
+            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">20:45</span></div>
             <div class="program-content">
               <h3>Openingsdans ♡</h3>
               <p>Het feest wordt geopend met de allereerste dans van Lisa &amp; Eric als echtpaar. <strong>Wees op tijd</strong> — dit wil je niet missen!</p>
@@ -474,13 +538,13 @@
               <h3>Feest &amp; dans</h3>
               <p>De dansvloer is van jullie — live muziek, dans en de mooiste herinneringen tot in de nacht.</p>
             </div>
-            <div class="program-time"><div class="time-dot"></div><span class="time-text">20:45–00:30</span></div>
+            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">20:45–00:30</span></div>
             <div class="program-empty"></div>
           </div>
 
           <div class="program-item right">
             <div class="program-empty"></div>
-            <div class="program-time"><div class="time-dot"></div><span class="time-text">00:30</span></div>
+            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">00:30</span></div>
             <div class="program-content">
               <h3>Einde feest</h3>
               <p>Veilig naar huis — en tot gauw!</p>
