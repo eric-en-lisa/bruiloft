@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lisa & Eric — 4 september 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --cream: #faf6f0;
@@ -77,6 +77,7 @@
 
   .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 10vw, 7rem); font-weight: 300; line-height: 1.05; color: var(--text); animation: fadeUp 1s ease 0.2s both; }
   .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero h1 .ampersand { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; color: var(--gold); font-size: 0.78em; letter-spacing: 0.02em; }
 
   .hero-divider { display: flex; align-items: center; gap: 1rem; margin: 1.8rem auto; width: 280px; animation: fadeUp 1s ease 0.4s both; }
   .hero-divider::before, .hero-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
@@ -347,7 +348,24 @@
   footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--gold-pale); font-size: 0.72rem; letter-spacing: 0.15em; color: var(--text-light); }
   footer span { color: var(--gold); }
 
-  /* ANIMATIONS */
+  /* DRESSCODE */
+  .dresscode-bg { background: var(--cream); padding: 6rem 2rem; }
+  .dresscode-inner { max-width: 900px; margin: 0 auto; }
+  .dresscode-palette { display: flex; justify-content: center; gap: 1rem; margin: 2rem 0 3rem; flex-wrap: wrap; }
+  .palette-swatch { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+  .swatch-circle { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--gold-pale); }
+  .swatch-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light); }
+  .dresscode-inspo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
+  .inspo-card { position: relative; overflow: hidden; aspect-ratio: 3/4; }
+  .inspo-card img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.85); transition: transform 0.5s ease; }
+  .inspo-card:hover img { transform: scale(1.03); }
+  .inspo-card-label { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(58,46,36,0.7), transparent); padding: 1rem 0.8rem 0.6rem; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.9); }
+  .dresscode-note { background: var(--white); border: 1px solid var(--gold-pale); border-left: 3px solid var(--gold); padding: 1.5rem 2rem; margin-top: 2.5rem; font-size: 0.88rem; color: var(--text-light); line-height: 1.8; }
+  .dresscode-note strong { color: var(--text); font-weight: 400; }
+  @media (max-width: 620px) {
+    .dresscode-inspo { grid-template-columns: 1fr 1fr; }
+    .dresscode-inspo .inspo-card:last-child { display: none; }
+  }
   @keyframes fadeUp  { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
   @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
   @keyframes scrollPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
@@ -360,6 +378,11 @@
     .gifts-box { padding: 2rem 1.2rem; }
     .hero-countdown { gap: 1.2rem; }
     .code-input { width: 180px; }
+    /* Ornament op één regel */
+    .hero-ornament { font-size: 0.78rem; letter-spacing: 0.18em; }
+    /* Hartjes in mobiele tijdlijn */
+    .time-dot { font-size: 1rem; color: var(--gold); }
+    .program-item.special .time-dot { font-size: 1.25rem; color: var(--brown); }
   }
 </style>
 </head>
@@ -370,6 +393,7 @@
   <a href="#programma">Programma</a>
   <a href="#menu" id="nav-menu">Menu</a>
   <a href="#praktisch">Praktisch</a>
+  <a href="#dresscode">Dresscode</a>
   <a href="#cadeaus">Cadeaus</a>
   <a href="#rsvp">RSVP</a>
 </nav>
@@ -378,12 +402,12 @@
 <section class="hero" id="hero">
   <div class="hero-ornament">✦ &nbsp; Wij gaan trouwen &nbsp; ✦</div>
 
-  <h1>Lisa <em>&</em> Eric</h1>
+  <h1>Lisa <span class="ampersand">&amp;</span> Eric</h1>
 
   <div class="hero-divider"><span>♡</span></div>
   <p class="hero-date">Vrijdag 4 september 2026</p>
   <p class="hero-location">Kasteel De Wittenburg</p>
-  <p class="hero-location" style="font-size:0.68rem; letter-spacing:0.15em; margin-top:0.2rem; color:var(--text-light);">Wittenburgerlaan 4 · 2243 GC Wassenaar</p>
+  <p class="hero-location" style="font-size:0.68rem; letter-spacing:0.15em; margin-top:0.2rem; color:var(--text-light);">Landgoed de Wittenburg 1 · 2244 BV Wassenaar</p>
 
   <div class="hero-countdown" id="countdown">
     <div class="countdown-item"><span class="countdown-num" id="cd-days">—</span><span class="countdown-label">Dagen</span></div>
@@ -669,22 +693,22 @@
       <div class="info-card">
         <div class="info-card-icon">📍</div>
         <h3>Locatie</h3>
-        <p>Kasteel De Wittenburg<br>Wittenburgerlaan 4<br>2243 GC Wassenaar<br><br><a href="https://maps.google.com/?q=Kasteel+De+Wittenburg+Wassenaar" target="_blank">Bekijk op Google Maps →</a></p>
+        <p>Landgoed de Wittenburg<br>Landgoed de Wittenburg 1<br>2244 BV Wassenaar<br><br><a href="https://maps.google.com/?q=Landgoed+de+Wittenburg+1+Wassenaar" target="_blank">Bekijk op Google Maps →</a></p>
       </div>
       <div class="info-card">
         <div class="info-card-icon">🚗</div>
         <h3>Parkeren</h3>
-        <p>Er is gratis parkeergelegenheid op het terrein van het kasteel. Volg de borden bij aankomst.<br><br>Met de trein? Station Wassenaar ligt op circa 10 minuten rijden.</p>
+        <p>Er is gratis parkeergelegenheid op het terrein van het landgoed.</p>
       </div>
       <div class="info-card">
         <div class="info-card-icon">👗</div>
         <h3>Dresscode</h3>
-        <p>Feestelijk &amp; elegant. Denk aan cocktailjurken, gala en mooie pakken.<br><br>De receptie is deels buiten — kies comfortabel schoeisel.</p>
+        <p>Summer Elegance. Denk aan lichte kleuren, beige, aardetinten en pastel.<br><br><a href="#dresscode" style="color:var(--gold);">Bekijk inspiratie →</a></p>
       </div>
       <div class="info-card">
         <div class="info-card-icon">🏨</div>
         <h3>Overnachten</h3>
-        <p>In de omgeving zijn diverse hotels beschikbaar. Wij raden aan vroeg te boeken.<br><br>Tips: hotels in Wassenaar of Den Haag (±15 min).</p>
+        <p>Op circa 7 minuten rijden (3 km) van de locatie bevindt zich een Van der Valk hotel. Wij raden aan vroeg te boeken.</p>
       </div>
       <div class="info-card">
         <div class="info-card-icon">📸</div>
@@ -692,12 +716,55 @@
         <p>We hebben een professionele fotograaf. Tijdens de ceremonie vragen we iedereen de telefoon even weg te steken.<br><br>Na de bruiloft delen we de foto's via een gedeeld album.</p>
       </div>
       <div class="info-card">
-        <div class="info-card-icon">✉️</div>
-        <h3>Contact</h3>
-        <p>Vragen of bijzonderheden?<br>Mail ons op<br><a href="/cdn-cgi/l/email-protection#701c1903115e150219134240424630171d11191c5e131f1d"><span class="__cf_email__" data-cfemail="0e62677d6f206b7c676d3c3e3c384e69636f6762206d6163">[email&#160;protected]</span></a><br><br>We helpen je graag verder!</p>
+        <div class="info-card-icon">🎗️</div>
+        <h3>Ceremoniemeesters</h3>
+        <p>Aricia Foet en Arend van Dam zijn onze ceremoniemeesters. Voor vragen kun je bij hen terecht:<br><br>📞 xxxx<br>✉️ <a href="mailto:bruiloft.lisa.eric@gmail.com">bruiloft.lisa.eric@gmail.com</a><br><br>Wil je iets bijdragen aan de dag — zoals een speech? Laat dit dan aan de ceremoniemeesters weten, zodat het voor ons een verrassing blijft. 🎉</p>
       </div>
     </div>
   </section>
+
+  <!-- ── DRESSCODE ── -->
+  <div class="dresscode-bg" id="dresscode">
+    <div class="dresscode-inner">
+      <p class="section-label">Kledingadvies</p>
+      <h2 class="section-title">Dresscode</h2>
+      <p class="section-subtitle">Summer Elegance — vier mee in stijl, licht en zomers.</p>
+      <div class="ornament-line"><span>✦</span></div>
+
+      <!-- Kleurenpalet -->
+      <div class="dresscode-palette">
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#e8dfd0;"></div><span class="swatch-label">Beige</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#f5e6d3;"></div><span class="swatch-label">Champagne</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#ddd5c4;"></div><span class="swatch-label">Zand</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#c4b5a0;"></div><span class="swatch-label">Taupe</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#e8d4c0;"></div><span class="swatch-label">Licht terra</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#dce8d8;"></div><span class="swatch-label">Saliegroen</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#e8d8e0;"></div><span class="swatch-label">Poederroze</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#d4dce8;"></div><span class="swatch-label">Lichtblauw</span></div>
+      </div>
+
+      <!-- Inspiratiefoto's via Unsplash (vrij te gebruiken) -->
+      <div class="dresscode-inspo">
+        <div class="inspo-card">
+          <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&q=80" alt="Summer elegance dames">
+          <div class="inspo-card-label">Dames</div>
+        </div>
+        <div class="inspo-card">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" alt="Summer elegance heren">
+          <div class="inspo-card-label">Heren</div>
+        </div>
+        <div class="inspo-card">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80" alt="Summer elegance sfeer">
+          <div class="inspo-card-label">Sfeer</div>
+        </div>
+      </div>
+
+      <div class="dresscode-note">
+        <strong>Kleuren om rekening mee te houden:</strong> Draag bij voorkeur geen wit, ivoor of roomkleur — dat is gereserveerd voor de bruid. Felle, donkere kleuren passen minder goed bij de zomerse sfeer van de dag.<br><br>
+        <strong>Praktisch:</strong> De receptie is deels buiten op het landgoed — kies comfortabel schoeisel dat ook op gras goed loopt. 🌿
+      </div>
+    </div>
+  </div>
 
   <!-- ── CADEAUS ── -->
   <div class="gifts-bg" id="cadeaus">
