@@ -209,66 +209,77 @@
   .program-divider::before, .program-divider::after { content: ''; flex: 1; height: 1px; background: var(--gold-pale); }
   .program-divider span { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
 
-  /* ── Mobiele tijdlijn (links uitgelijnd) ── */
+  /* ── Mobiele tijdlijn ── */
   @media (max-width: 620px) {
-    /* Grid: [tijd 50px] [lijn+hart 28px] [content]
-       Lijn gecentreerd op de hart-kolom */
+    /* Middenlijn: 50px van links (midden van de 28px hart-kolom na de 36px tijdkolom) */
     .program-grid::before { left: 50px; transform: none; }
 
+    /* Alle items: flex-rij [tijd | hart | content] */
     .program-item {
-      grid-template-columns: 50px 28px 1fr !important;
-      grid-template-rows: auto;
-      gap: 0;
+      display: flex !important;
+      flex-direction: row;
       align-items: center;
-      padding: 1.1rem 0;
+      gap: 0;
+      padding: 1rem 0;
+      opacity: 1;
+      transform: none;
     }
+    .program-item.visible { opacity: 1; transform: none; }
 
-    /* program-time wordt transparent: zijn kinderen worden grid-items */
-    .program-item.left  .program-time,
-    .program-item.right .program-time {
-      display: contents !important;
-    }
-
-    /* Lege placeholder weg */
+    /* Lege kolom altijd verbergen */
     .program-empty { display: none !important; }
 
-    /* time-text (tijdstip): kolom 1, rechts uitgelijnd */
-    .program-item.left  .time-text,
-    .program-item.right .time-text {
-      grid-column: 1 !important;
-      grid-row: 1 !important;
+    /* program-time: vaste breedte, flex-rij [tijd rechts | hart gecentreerd] */
+    .program-time {
+      display: flex !important;
+      flex-direction: row;
+      align-items: center;
+      flex-shrink: 0;
+      width: 78px;         /* 50px tijd + 28px hart */
+      gap: 0;
+      order: 0;            /* altijd vóór content */
+    }
+
+    /* Tijdstip: 50px breed, rechts uitgelijnd */
+    .time-text {
+      width: 44px;
       text-align: right;
-      padding-right: 0.5rem;
-      font-size: 0.7rem;
+      font-size: 0.7rem !important;
       white-space: nowrap;
+      padding-right: 4px;
       color: var(--gold);
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      align-self: center;
+      flex-shrink: 0;
     }
 
-    /* time-dot (hartje): kolom 2, gecentreerd = OP de lijn */
-    .program-item.left  .time-dot,
-    .program-item.right .time-dot {
-      grid-column: 2 !important;
-      grid-row: 1 !important;
-      display: flex !important;
-      align-items: center;
-      justify-content: center;
-      align-self: center;
+    /* Hartje: 28px breed, gecentreerd OP de lijn */
+    .time-dot {
+      width: 28px;
+      text-align: center;
+      flex-shrink: 0;
+      font-size: 1rem !important;
+      color: var(--gold) !important;
+      filter: drop-shadow(0 0 3px rgba(184,154,90,0.35)) !important;
     }
 
-    /* content: kolom 3 */
-    .program-item.left  .program-content,
-    .program-item.right .program-content {
-      grid-column: 3 !important;
-      grid-row: 1 !important;
-      text-align: left !important;
-      padding-left: 0.7rem;
+    /* Speciale hartjes (openingsdans / verzamelen): bruin, iets groter */
+    .program-item.special .time-dot {
+      font-size: 1.25rem !important;
+      color: var(--brown) !important;
+      filter: drop-shadow(0 0 4px rgba(107,79,53,0.3)) !important;
     }
-
-    /* special tijdstip kleur */
     .program-item.special .time-text { color: var(--brown) !important; }
+
+    /* Content: altijd rechts, links uitgelijnd */
+    .program-content {
+      flex: 1;
+      text-align: left !important;
+      padding-left: 0.6rem;
+      order: 1;
+    }
+    .program-content h3 { font-size: 1.05rem; }
+    .program-content p  { font-size: 0.78rem; }
   }
 
   /* MENU */
@@ -289,23 +300,21 @@
   .menu-course-header::before { max-width: 60px; }
   .menu-course-label { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
 
-  .menu-dish { display: grid; grid-template-columns: 1fr auto; gap: 0.4rem 1.5rem; padding: 1.2rem 0; border-bottom: 1px solid var(--cream-dark); align-items: start; }
+  .menu-dish { padding: 1.2rem 0; border-bottom: 1px solid var(--cream-dark); }
   .menu-dish:last-child { border-bottom: none; padding-bottom: 0; }
 
-  .menu-dish-name { font-family: 'Cormorant Garamond', serif; font-size: 1.12rem; font-weight: 400; color: var(--text); grid-column: 1; }
-  .menu-dish-components { font-size: 0.8rem; color: var(--text-light); line-height: 1.6; grid-column: 1; margin-top: 0.2rem; }
+  .menu-dish-name { font-family: 'Cormorant Garamond', serif; font-size: 1.12rem; font-weight: 400; color: var(--text); margin-bottom: 0.3rem; }
+  .menu-dish-components { font-size: 0.8rem; color: var(--text-light); line-height: 1.6; margin-bottom: 0.5rem; }
   .menu-dish-components span { display: inline; }
   .menu-dish-components span::after { content: ' · '; color: var(--gold-pale); }
   .menu-dish-components span:last-child::after { content: ''; }
-  .menu-dish-allergens { grid-column: 2; grid-row: 1 / 3; align-self: center; text-align: right; font-size: 0.68rem; color: var(--text-light); letter-spacing: 0.04em; white-space: nowrap; border-left: 1px solid var(--gold-pale); padding-left: 1rem; }
-  .menu-dish-allergens::before { content: '⚠ '; color: var(--gold-pale); font-size: 0.6rem; }
+  .menu-dish-allergens { font-size: 0.68rem; color: var(--text-light); letter-spacing: 0.04em; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+  .menu-dish-allergens::before { content: '△'; color: transparent; font-size: 0.65rem; line-height: 1; -webkit-text-stroke: 1px var(--gold-pale); text-stroke: 1px var(--gold-pale); }
 
   .menu-course-divider { text-align: center; margin: 2.5rem 0; color: var(--gold-pale); letter-spacing: 0.6em; font-size: 0.7rem; }
 
   @media (max-width: 620px) {
     .menu-booklet { padding: 2rem 1.4rem; }
-    .menu-dish { grid-template-columns: 1fr; }
-    .menu-dish-allergens { grid-column: 1; grid-row: auto; text-align: left; border-left: none; padding-left: 0; border-top: 1px solid var(--cream-dark); padding-top: 0.4rem; margin-top: 0.3rem; }
   }
 
   /* INFO */
@@ -765,6 +774,14 @@
         <div class="palette-swatch"><div class="swatch-circle" style="background:#dce8d8;"></div><span class="swatch-label">Saliegroen</span></div>
         <div class="palette-swatch"><div class="swatch-circle" style="background:#e8d8e0;"></div><span class="swatch-label">Poederroze</span></div>
         <div class="palette-swatch"><div class="swatch-circle" style="background:#d4dce8;"></div><span class="swatch-label">Lichtblauw</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#e8e4d4;"></div><span class="swatch-label">Linen</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#d8e8e4;"></div><span class="swatch-label">Mintgroen</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#ede8d8;"></div><span class="swatch-label">Vanille</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#e4d8e8;"></div><span class="swatch-label">Lavendel</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#e8d8d0;"></div><span class="swatch-label">Perzik</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#d0dce0;"></div><span class="swatch-label">IJsblauw</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#e0e8d4;"></div><span class="swatch-label">Pistache</span></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#ece4dc;"></div><span class="swatch-label">Crème</span></div>
       </div>
 
       <!-- Inspiratiefoto's via Unsplash (vrij te gebruiken) -->
