@@ -378,6 +378,16 @@
   .check-option input[type="checkbox"] { accent-color: var(--gold); width: 16px; height: 16px; cursor: pointer; flex-shrink: 0; }
   .check-option:has(input:checked) { background: var(--gold-pale); border-color: var(--gold); color: var(--text); }
 
+  /* RSVP menu keuze */
+  .menu-choice-block { background: var(--cream); border: 1px solid var(--gold-pale); padding: 1.4rem; margin-bottom: 1rem; }
+  .menu-choice-block:last-child { margin-bottom: 0; }
+  .menu-choice-title { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--text); margin-bottom: 0.8rem; letter-spacing: 0.02em; }
+  .menu-choice-options { display: flex; flex-direction: column; gap: 0.5rem; }
+  .menu-radio { display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; }
+  .menu-radio input[type="radio"] { accent-color: var(--gold); margin-top: 0.2rem; flex-shrink: 0; width: 15px; height: 15px; cursor: pointer; }
+  .menu-radio-label { font-size: 0.85rem; color: var(--text); line-height: 1.4; }
+  .menu-radio-label em { font-size: 0.75rem; color: var(--text-light); font-style: normal; display: block; margin-top: 0.1rem; }
+
   footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--gold-pale); font-size: 0.72rem; letter-spacing: 0.15em; color: var(--text-light); }
   footer span { color: var(--gold); }
 
@@ -829,20 +839,18 @@
     <div class="rsvp-inner">
       <p class="section-label">Aanmelden</p>
       <h2 class="section-title">RSVP</h2>
-      <p class="section-subtitle">Laat ons uiterlijk <strong>1 juni 2026</strong> weten of je erbij kunt zijn.</p>
+      <p class="section-subtitle">Laat ons uiterlijk <strong>1 juli 2026</strong> weten of je erbij kunt zijn.</p>
       <div class="ornament-line"><span>✦</span></div>
 
       <div class="rsvp-form">
-
         <div id="rsvp-step-form">
           <span class="rsvp-badge" id="rsvp-badge">—</span>
           <h3 class="rsvp-type-title">Jouw aanmelding</h3>
           <p class="rsvp-type-sub" id="rsvp-sub">Vul je gegevens hieronder in.</p>
 
-          <!-- ── Hoofdgast gegevens ── -->
+          <!-- Gegevens -->
           <hr class="form-divider">
           <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:1rem; color:var(--text);">Jouw gegevens</p>
-
           <div class="form-row">
             <div class="form-group" style="margin:0;"><label>Voornaam *</label><input type="text" id="g-first" placeholder="Voornaam"></div>
             <div class="form-group" style="margin:0;"><label>Achternaam *</label><input type="text" id="g-last" placeholder="Achternaam"></div>
@@ -852,30 +860,78 @@
             <div class="form-group" style="margin:0;"><label>Telefoonnummer</label><input type="tel" id="g-phone" placeholder="+31 6 00000000"></div>
           </div>
 
-          <!-- ── Aanwezigheid hoofdgast (dag) ── -->
+          <!-- Aanwezigheid toggle -->
+          <div style="margin-top:1.5rem;">
+            <hr class="form-divider">
+            <div class="form-group">
+              <label>Ben je aanwezig? *</label>
+              <div class="radio-group">
+                <div class="radio-option"><input type="radio" name="attendance" id="att-yes" value="ja" checked><label for="att-yes">✓ &nbsp; Ik ben erbij!</label></div>
+                <div class="radio-option"><input type="radio" name="attendance" id="att-no" value="nee"><label for="att-no">✗ &nbsp; Helaas verhinderd</label></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aanwezigheid daggast -->
           <div id="attendance-dag-wrap" style="display:none; margin-top:1.5rem;">
             <hr class="form-divider">
-            <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem; color:var(--text);">Aanwezigheid overdag</p>
-            <p style="font-size:0.8rem; color:var(--text-light); margin-bottom:1rem;">Geef aan bij welke onderdelen je aanwezig bent.</p>
+            <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem; color:var(--text);">Bij welke onderdelen ben je aanwezig?</p>
+            <p style="font-size:0.8rem; color:var(--text-light); margin-bottom:1rem;">Selecteer alles wat van toepassing is.</p>
             <div class="attendance-checks">
-              <label class="check-option"><input type="checkbox" name="dag-ontvangst" id="dag-ontvangst"><span>Ontvangst <em style="color:var(--text-light);font-size:0.78rem;">(14:30)</em></span></label>
-              <label class="check-option"><input type="checkbox" name="dag-ceremonie" id="dag-ceremonie"><span>Ceremonie <em style="color:var(--text-light);font-size:0.78rem;">(15:00)</em></span></label>
-              <label class="check-option"><input type="checkbox" name="dag-receptie" id="dag-receptie"><span>Receptie <em style="color:var(--text-light);font-size:0.78rem;">(16:00)</em></span></label>
-              <label class="check-option"><input type="checkbox" name="dag-diner" id="dag-diner"><span>Diner <em style="color:var(--text-light);font-size:0.78rem;">(18:00)</em></span></label>
+              <label class="check-option"><input type="checkbox" name="dag-ceremonie" id="dag-ceremonie"><span>Ceremonie</span></label>
+              <label class="check-option"><input type="checkbox" name="dag-diner" id="dag-diner"><span>Diner</span></label>
+              <label class="check-option"><input type="checkbox" name="dag-feest" id="dag-feest"><span>Feest</span></label>
+            </div>
+
+            <!-- Menukaart — verschijnt als diner aangevinkt -->
+            <div id="diner-keuze-wrap" style="display:none; margin-top:1.5rem;">
+              <hr class="form-divider">
+              <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem; color:var(--text);">Jouw menukeuze</p>
+              <p style="font-size:0.8rem; color:var(--text-light); margin-bottom:1.2rem;">Kies per gang één gerecht.</p>
+
+              <div class="menu-choice-block">
+                <p class="menu-choice-title">Voorgerecht</p>
+                <div class="menu-choice-options">
+                  <label class="menu-radio"><input type="radio" name="g-voorgerecht" value="Zalm"><span class="menu-radio-label">Zalm<em>mierikswortelcrème · avocado · tomaat</em></span></label>
+                  <label class="menu-radio"><input type="radio" name="g-voorgerecht" value="Beef tataki"><span class="menu-radio-label">Beef tataki<em>ponzu gember dressing · shiitake · komkommer</em></span></label>
+                  <label class="menu-radio"><input type="radio" name="g-voorgerecht" value="Burrata"><span class="menu-radio-label">Burrata<em>basilicum venkel dressing · oer-tomaat · balsamico parels</em></span></label>
+                </div>
+              </div>
+
+              <div class="menu-choice-block">
+                <p class="menu-choice-title">Hoofdgerecht</p>
+                <div class="menu-choice-options">
+                  <label class="menu-radio"><input type="radio" name="g-hoofdgerecht" value="Zeebaars"><span class="menu-radio-label">Zeebaars<em>risotto · groene asperges · beurre blanc met haring kaviaar</em></span></label>
+                  <label class="menu-radio"><input type="radio" name="g-hoofdgerecht" value="Entrecote"><span class="menu-radio-label">Entrecote<em>mousseline · peper-cognac jus · paddenstoelen · groene asperges</em></span></label>
+                  <label class="menu-radio"><input type="radio" name="g-hoofdgerecht" value="Tortellini"><span class="menu-radio-label">Tortellini<em>paddenstoelen · saus van pompoen · courgette</em></span></label>
+                </div>
+              </div>
+
+              <div class="menu-choice-block">
+                <p class="menu-choice-title">Nagerecht</p>
+                <div class="menu-choice-options">
+                  <label class="menu-radio"><input type="radio" name="g-nagerecht" value="Hazelnotencrème"><span class="menu-radio-label">Hazelnotencrème<em>caramel · mousse</em></span></label>
+                  <label class="menu-radio"><input type="radio" name="g-nagerecht" value="Framboos"><span class="menu-radio-label">Framboos<em>pure chocolade · coulis</em></span></label>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-top:1.2rem;">
+                <label>Allergieën of dieetwensen</label>
+                <input type="text" id="g-diet" placeholder="bijv. glutenvrij, notenallergie, vegetarisch…">
+              </div>
             </div>
           </div>
 
-          <!-- ── Aanwezigheid avond (dag én avondgasten) ── -->
+          <!-- Aanwezigheid avondgast -->
           <div id="attendance-avond-wrap" style="display:none; margin-top:1.5rem;">
             <hr class="form-divider">
-            <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem; color:var(--text);">Aanwezigheid avondfeest</p>
-            <p style="font-size:0.8rem; color:var(--text-light); margin-bottom:1rem;">Ben je aanwezig bij het feest?</p>
-            <div class="attendance-checks">
-              <label class="check-option"><input type="checkbox" name="avond-feest" id="avond-feest"><span>Feest <em style="color:var(--text-light);font-size:0.78rem;">(20:30)</em></span></label>
+            <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem; color:var(--text);">Ben je aanwezig bij het feest?</p>
+            <div class="attendance-checks" style="margin-top:0.8rem;">
+              <label class="check-option"><input type="checkbox" name="avond-feest" id="avond-feest"><span>Feest</span></label>
             </div>
           </div>
 
-          <!-- ── Partner sectie ── -->
+          <!-- Partner sectie -->
           <div id="partner-wrap" style="display:none; margin-top:1.5rem;">
             <hr class="form-divider">
             <div class="form-group" style="margin-bottom:0.8rem;">
@@ -895,12 +951,47 @@
 
               <!-- Partner aanwezigheid dag -->
               <div id="partner-attendance-dag-wrap" style="display:none; margin-top:1.2rem;">
-                <p style="font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.6rem;">Aanwezigheid partner overdag</p>
+                <p style="font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.6rem;">Aanwezigheid partner</p>
                 <div class="attendance-checks">
-                  <label class="check-option"><input type="checkbox" name="p-dag-ontvangst" id="p-dag-ontvangst"><span>Ontvangst</span></label>
                   <label class="check-option"><input type="checkbox" name="p-dag-ceremonie" id="p-dag-ceremonie"><span>Ceremonie</span></label>
-                  <label class="check-option"><input type="checkbox" name="p-dag-receptie" id="p-dag-receptie"><span>Receptie</span></label>
                   <label class="check-option"><input type="checkbox" name="p-dag-diner" id="p-dag-diner"><span>Diner</span></label>
+                  <label class="check-option"><input type="checkbox" name="p-dag-feest" id="p-dag-feest"><span>Feest</span></label>
+                </div>
+
+                <!-- Partner menukaart -->
+                <div id="p-diner-keuze-wrap" style="display:none; margin-top:1.2rem;">
+                  <p style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--text); margin-bottom:0.8rem;">Menukeuze partner</p>
+
+                  <div class="menu-choice-block">
+                    <p class="menu-choice-title">Voorgerecht</p>
+                    <div class="menu-choice-options">
+                      <label class="menu-radio"><input type="radio" name="p-voorgerecht" value="Zalm"><span class="menu-radio-label">Zalm<em>mierikswortelcrème · avocado · tomaat</em></span></label>
+                      <label class="menu-radio"><input type="radio" name="p-voorgerecht" value="Beef tataki"><span class="menu-radio-label">Beef tataki<em>ponzu gember dressing · shiitake · komkommer</em></span></label>
+                      <label class="menu-radio"><input type="radio" name="p-voorgerecht" value="Burrata"><span class="menu-radio-label">Burrata<em>basilicum venkel dressing · oer-tomaat · balsamico parels</em></span></label>
+                    </div>
+                  </div>
+
+                  <div class="menu-choice-block">
+                    <p class="menu-choice-title">Hoofdgerecht</p>
+                    <div class="menu-choice-options">
+                      <label class="menu-radio"><input type="radio" name="p-hoofdgerecht" value="Zeebaars"><span class="menu-radio-label">Zeebaars<em>risotto · groene asperges · beurre blanc met haring kaviaar</em></span></label>
+                      <label class="menu-radio"><input type="radio" name="p-hoofdgerecht" value="Entrecote"><span class="menu-radio-label">Entrecote<em>mousseline · peper-cognac jus · paddenstoelen · groene asperges</em></span></label>
+                      <label class="menu-radio"><input type="radio" name="p-hoofdgerecht" value="Tortellini"><span class="menu-radio-label">Tortellini<em>paddenstoelen · saus van pompoen · courgette</em></span></label>
+                    </div>
+                  </div>
+
+                  <div class="menu-choice-block">
+                    <p class="menu-choice-title">Nagerecht</p>
+                    <div class="menu-choice-options">
+                      <label class="menu-radio"><input type="radio" name="p-nagerecht" value="Hazelnotencrème"><span class="menu-radio-label">Hazelnotencrème<em>caramel · mousse</em></span></label>
+                      <label class="menu-radio"><input type="radio" name="p-nagerecht" value="Framboos"><span class="menu-radio-label">Framboos<em>pure chocolade · coulis</em></span></label>
+                    </div>
+                  </div>
+
+                  <div class="form-group" style="margin-top:1.2rem;">
+                    <label>Allergieën of dieetwensen partner</label>
+                    <input type="text" id="p-diet" placeholder="bijv. glutenvrij, notenallergie, vegetarisch…">
+                  </div>
                 </div>
               </div>
 
@@ -908,31 +999,19 @@
               <div id="partner-attendance-avond-wrap" style="display:none; margin-top:1.2rem;">
                 <p style="font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.6rem;">Aanwezigheid partner avondfeest</p>
                 <div class="attendance-checks">
-                  <label class="check-option"><input type="checkbox" name="p-avond-feest" id="p-avond-feest"><span>Feest <em style="color:var(--text-light);font-size:0.78rem;">(20:30)</em></span></label>
+                  <label class="check-option"><input type="checkbox" name="p-avond-feest" id="p-avond-feest"><span>Feest</span></label>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- ── Niet aanwezig ── -->
+          <!-- Niet aanwezig -->
           <div id="attendance-nee-wrap" style="display:none; margin-top:1.5rem;">
             <hr class="form-divider">
-            <p style="font-size:0.88rem; color:var(--text-light); line-height:1.7;">Wat jammer dat je er niet bij kunt zijn. Laat je naam en e-mailadres achter zodat we je kunnen laten weten hoe het was. ♡</p>
+            <p style="font-size:0.88rem; color:var(--text-light); line-height:1.7;">Wat jammer dat je er niet bij kunt zijn. We denken aan je op onze grote dag. ♡</p>
           </div>
 
-          <!-- ── Aanwezigheid hoofd toggle ── -->
-          <div style="margin-top:1.5rem;">
-            <hr class="form-divider">
-            <div class="form-group">
-              <label>Ben je aanwezig? *</label>
-              <div class="radio-group">
-                <div class="radio-option"><input type="radio" name="attendance" id="att-yes" value="ja" checked><label for="att-yes">✓ &nbsp; Ik ben erbij!</label></div>
-                <div class="radio-option"><input type="radio" name="attendance" id="att-no" value="nee"><label for="att-no">✗ &nbsp; Helaas verhinderd</label></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group" style="margin-top:0.5rem;">
+          <div class="form-group" style="margin-top:1.5rem;">
             <label>Aanvullend bericht (optioneel)</label>
             <textarea id="rsvp-message" placeholder="Heb je nog iets te melden? Laat het ons weten."></textarea>
           </div>
@@ -947,7 +1026,6 @@
           <h3>Bedankt!</h3>
           <p id="success-text">We kijken er enorm naar uit om deze bijzondere dag met jou te vieren!</p>
         </div>
-
       </div>
     </div>
   </div>
@@ -967,12 +1045,12 @@
    Vul hieronder de URL in van je Apps Script
    (zie instructies in de website-download)
 ══════════════════════════════════════════ */
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwgJ9rpDy3vU-ADDaKbu9ZTv8q6yyEPefcSjNfFR-Z3ASvAxGixCkNpTjW1qB-l8RuI/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby5qitP1MZV3GRORFULgissDkE_Xc8AuFTD5jFR7g3ZgiAyfgLC-09tsquZm5IvrFQs/exec';
 
 let currentType    = null;
 let currentPartner = false;
 
-/* ── Code check ── */
+/* ── Code check via JSONP (omzeilt CORS-blokkade) ── */
 async function checkCode() {
   const val   = document.getElementById('invite-code').value.trim().toUpperCase();
   const input = document.getElementById('invite-code');
@@ -981,16 +1059,33 @@ async function checkCode() {
 
   if (!val) return;
 
-  // Laad-status tonen
   btn.textContent = 'Controleren…';
   btn.disabled = true;
   input.classList.remove('error');
   err.style.display = 'none';
 
-  try {
-    const res  = await fetch(`${APPS_SCRIPT_URL}?code=${encodeURIComponent(val)}`);
-    const data = await res.json();
+  // JSONP: voeg een <script> tag toe die de Apps Script URL aanroept
+  // Apps Script stuurt callback(...) terug → omzeilt CORS
+  const callbackName = 'gsCallback_' + Date.now();
+  const script = document.createElement('script');
+  script.src = `${APPS_SCRIPT_URL}?code=${encodeURIComponent(val)}&callback=${callbackName}`;
 
+  const timeout = setTimeout(() => {
+    cleanup();
+    err.style.display = 'block';
+    err.textContent = 'Verbinding mislukt. Controleer je internetverbinding.';
+    btn.textContent = 'Bekijk website →';
+    btn.disabled = false;
+  }, 10000);
+
+  function cleanup() {
+    clearTimeout(timeout);
+    delete window[callbackName];
+    if (script.parentNode) script.parentNode.removeChild(script);
+  }
+
+  window[callbackName] = function(data) {
+    cleanup();
     if (!data.found) {
       input.classList.add('error');
       err.style.display = 'block';
@@ -999,19 +1094,22 @@ async function checkCode() {
       btn.disabled = false;
       return;
     }
-
     input.classList.remove('error');
     err.style.display = 'none';
-    currentType    = data.type;    // 'dag' of 'avond'
-    currentPartner = data.partner; // true of false
+    currentType    = data.type;
+    currentPartner = data.partner;
     unlockSite(data.type, data.partner);
+  };
 
-  } catch (e) {
+  script.onerror = function() {
+    cleanup();
     err.style.display = 'block';
     err.textContent = 'Er ging iets mis. Probeer het opnieuw of stuur een mail.';
     btn.textContent = 'Bekijk website →';
     btn.disabled = false;
-  }
+  };
+
+  document.head.appendChild(script);
 }
 
 document.getElementById('invite-code').addEventListener('keydown', e => {
@@ -1051,18 +1149,32 @@ function unlockSite(type, hasPartner) {
   // RSVP labels
   document.getElementById('rsvp-badge').textContent = isDay ? 'Daggast' : 'Avondgast';
   document.getElementById('rsvp-sub').textContent   = isDay
-    ? 'Je bent uitgenodigd voor de volledige dag. Laat ons voor 1 juni 2026 weten of je erbij bent.'
-    : 'Je bent uitgenodigd voor het avondfeest. Laat ons voor 1 juni 2026 weten of je erbij bent.';
+    ? 'Je bent uitgenodigd voor de volledige dag. Laat ons voor 1 juli 2026 weten of je erbij bent.'
+    : 'Je bent uitgenodigd voor het avondfeest. Laat ons voor 1 juli 2026 weten of je erbij bent.';
 
   // Show/hide attendance blocks
-  document.getElementById('attendance-dag-wrap').style.display   = isDay ? 'block' : 'none';
-  document.getElementById('attendance-avond-wrap').style.display  = 'block';
+  document.getElementById('attendance-dag-wrap').style.display  = 'none';
+  document.getElementById('attendance-avond-wrap').style.display = 'none';
+
+  // Diner checkbox → toon menukaart
+  const dinerCb = document.getElementById('dag-diner');
+  if (dinerCb) {
+    dinerCb.addEventListener('change', () => {
+      document.getElementById('diner-keuze-wrap').style.display = dinerCb.checked ? 'block' : 'none';
+    });
+  }
+  const pDinerCb = document.getElementById('p-dag-diner');
+  if (pDinerCb) {
+    pDinerCb.addEventListener('change', () => {
+      document.getElementById('p-diner-keuze-wrap').style.display = pDinerCb.checked ? 'block' : 'none';
+    });
+  }
 
   // Partner section
   document.getElementById('partner-wrap').style.display = hasPartner ? 'block' : 'none';
   if (hasPartner) {
     document.getElementById('partner-attendance-dag-wrap').style.display  = isDay ? 'block' : 'none';
-    document.getElementById('partner-attendance-avond-wrap').style.display = 'block';
+    document.getElementById('partner-attendance-avond-wrap').style.display = isDay ? 'none' : 'block';
     document.getElementById('partner-nee').checked = true;
   }
 
@@ -1078,10 +1190,10 @@ function unlockSite(type, hasPartner) {
   document.querySelectorAll('input[name="attendance"]').forEach(r => {
     r.addEventListener('change', () => {
       const aanwezig = document.querySelector('input[name="attendance"]:checked').value === 'ja';
-      document.getElementById('attendance-dag-wrap').style.display   = (aanwezig && isDay) ? 'block' : 'none';
-      document.getElementById('attendance-avond-wrap').style.display = aanwezig ? 'block' : 'none';
-      document.getElementById('partner-wrap').style.display          = (aanwezig && hasPartner) ? 'block' : 'none';
-      document.getElementById('attendance-nee-wrap').style.display   = aanwezig ? 'none' : 'block';
+      document.getElementById('attendance-dag-wrap').style.display   = (aanwezig && isDay)  ? 'block' : 'none';
+      document.getElementById('attendance-avond-wrap').style.display  = (aanwezig && !isDay) ? 'block' : 'none';
+      document.getElementById('partner-wrap').style.display           = (aanwezig && hasPartner) ? 'block' : 'none';
+      document.getElementById('attendance-nee-wrap').style.display    = aanwezig ? 'none' : 'block';
     });
   });
 
@@ -1094,34 +1206,43 @@ function unlockSite(type, hasPartner) {
 
 /* ── Submit ── */
 async function submitRSVP() {
-  const first = document.getElementById('g-first').value.trim();
-  const last  = document.getElementById('g-last').value.trim();
-  const email = document.getElementById('g-email').value.trim();
-  const phone = document.getElementById('g-phone').value.trim();
-  const msg   = document.getElementById('rsvp-message').value.trim();
+  const first    = document.getElementById('g-first').value.trim();
+  const last     = document.getElementById('g-last').value.trim();
+  const email    = document.getElementById('g-email').value.trim();
+  const phone    = document.getElementById('g-phone').value.trim();
+  const msg      = document.getElementById('rsvp-message').value.trim();
   const aanwezig = document.querySelector('input[name="attendance"]:checked').value;
-  const isDay = currentType === 'dag';
+  const isDay    = currentType === 'dag';
 
   if (!first || !last) { alert('Vul je voor- en achternaam in.'); return; }
   if (!email || !email.includes('@')) { alert('Vul een geldig e-mailadres in.'); return; }
 
-  // Build summary
   let summary = '';
 
   if (aanwezig === 'ja') {
-    // Dag onderdelen
     if (isDay) {
       const dagOnderdelen = [];
-      if (document.getElementById('dag-ontvangst').checked) dagOnderdelen.push('Ontvangst (14:30)');
-      if (document.getElementById('dag-ceremonie').checked) dagOnderdelen.push('Ceremonie (15:00)');
-      if (document.getElementById('dag-receptie').checked)  dagOnderdelen.push('Receptie (16:00)');
-      if (document.getElementById('dag-diner').checked)     dagOnderdelen.push('Diner (18:00)');
-      summary += `\n🌞 Aanwezig overdag: ${dagOnderdelen.length ? dagOnderdelen.join(', ') : 'Geen onderdelen geselecteerd'}`;
-    }
+      if (document.getElementById('dag-ceremonie').checked) dagOnderdelen.push('Ceremonie');
+      if (document.getElementById('dag-diner').checked)     dagOnderdelen.push('Diner');
+      if (document.getElementById('dag-feest').checked)     dagOnderdelen.push('Feest');
+      summary += `\n🌞 Aanwezig bij: ${dagOnderdelen.length ? dagOnderdelen.join(', ') : 'Geen onderdelen geselecteerd'}`;
 
-    // Avond
-    const avondAanwezig = document.getElementById('avond-feest').checked;
-    summary += `\n🌙 Feest (20:30): ${avondAanwezig ? 'Ja' : 'Nee'}`;
+      // Menu + dieet
+      if (document.getElementById('dag-diner').checked) {
+        const vg  = document.querySelector('input[name="g-voorgerecht"]:checked');
+        const hg  = document.querySelector('input[name="g-hoofdgerecht"]:checked');
+        const ng  = document.querySelector('input[name="g-nagerecht"]:checked');
+        const diet = document.getElementById('g-diet').value.trim();
+        summary += `\n🍽️ Menukeuze:`;
+        summary += `\n   Voorgerecht: ${vg  ? vg.value  : '—'}`;
+        summary += `\n   Hoofdgerecht: ${hg ? hg.value  : '—'}`;
+        summary += `\n   Nagerecht: ${ng    ? ng.value  : '—'}`;
+        if (diet) summary += `\n   Allergieën/dieet: ${diet}`;
+      }
+    } else {
+      const feest = document.getElementById('avond-feest').checked;
+      summary += `\n🌙 Feest: ${feest ? 'Ja' : 'Nee'}`;
+    }
 
     // Partner
     if (currentPartner) {
@@ -1131,15 +1252,27 @@ async function submitRSVP() {
         const pLast  = document.getElementById('p-last').value.trim();
         summary += `\n\n👫 Partner: ${pFirst} ${pLast}`;
         if (isDay) {
-          const pDagOnderdelen = [];
-          if (document.getElementById('p-dag-ontvangst').checked) pDagOnderdelen.push('Ontvangst');
-          if (document.getElementById('p-dag-ceremonie').checked) pDagOnderdelen.push('Ceremonie');
-          if (document.getElementById('p-dag-receptie').checked)  pDagOnderdelen.push('Receptie');
-          if (document.getElementById('p-dag-diner').checked)     pDagOnderdelen.push('Diner');
-          summary += `\n   Overdag: ${pDagOnderdelen.length ? pDagOnderdelen.join(', ') : 'Geen onderdelen'}`;
+          const pOnderdelen = [];
+          if (document.getElementById('p-dag-ceremonie').checked) pOnderdelen.push('Ceremonie');
+          if (document.getElementById('p-dag-diner').checked)     pOnderdelen.push('Diner');
+          if (document.getElementById('p-dag-feest').checked)     pOnderdelen.push('Feest');
+          summary += `\n   Aanwezig bij: ${pOnderdelen.length ? pOnderdelen.join(', ') : '—'}`;
+
+          if (document.getElementById('p-dag-diner').checked) {
+            const pvg   = document.querySelector('input[name="p-voorgerecht"]:checked');
+            const phg   = document.querySelector('input[name="p-hoofdgerecht"]:checked');
+            const png   = document.querySelector('input[name="p-nagerecht"]:checked');
+            const pdiet = document.getElementById('p-diet').value.trim();
+            summary += `\n   Menukeuze partner:`;
+            summary += `\n   Voorgerecht: ${pvg  ? pvg.value : '—'}`;
+            summary += `\n   Hoofdgerecht: ${phg ? phg.value : '—'}`;
+            summary += `\n   Nagerecht: ${png    ? png.value : '—'}`;
+            if (pdiet) summary += `\n   Allergieën/dieet: ${pdiet}`;
+          }
+        } else {
+          const pFeest = document.getElementById('p-avond-feest').checked;
+          summary += `\n   Feest: ${pFeest ? 'Ja' : 'Nee'}`;
         }
-        const pAvond = document.getElementById('p-avond-feest').checked;
-        summary += `\n   Feest: ${pAvond ? 'Ja' : 'Nee'}`;
       } else {
         summary += '\n\n👤 Partner: Komt niet mee';
       }
@@ -1147,12 +1280,7 @@ async function submitRSVP() {
   }
 
   const guestType = isDay ? 'Daggast' : 'Avondgast';
-
-  // ── Email naar Lisa & Eric via EmailJS / Formspree ──
-  // Hieronder staat een Formspree-implementatie.
-  // Vervang 'YOUR_FORMSPREE_ID' met jouw eigen Formspree endpoint.
-  // Maak gratis een account aan op https://formspree.io
-  const FORMSPREE_ID = 'xqeyreal'; // ← Formspree endpoint
+  const FORMSPREE_ID = 'xqeyreal';
 
   const payload = {
     _subject: `RSVP Bruiloft Lisa & Eric — ${first} ${last} (${guestType})`,
@@ -1166,7 +1294,6 @@ async function submitRSVP() {
     _replyto: email,
   };
 
-  // Stuur naar lisa.d.m@live.nl via Formspree
   try {
     if (FORMSPREE_ID) {
       await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
@@ -1177,21 +1304,6 @@ async function submitRSVP() {
     }
   } catch(e) { console.warn('Formspree niet bereikbaar:', e); }
 
-  // Bevestigingsmail naar gast — via mailto fallback (of vervang door eigen SMTP/emailservice)
-  // Voor een echte bevestigingsmail heb je een backend of dienst als EmailJS nodig.
-  // Zie: https://www.emailjs.com  (gratis tier beschikbaar)
-  // Voorbeeld EmailJS-integratie staat als commentaar hieronder:
-  /*
-  emailjs.send('SERVICE_ID', 'TEMPLATE_ID', {
-    to_email: email,
-    to_name: first,
-    guest_type: guestType,
-    summary: summary,
-    website_url: window.location.href,
-  });
-  */
-
-  // Succes-bericht tonen
   if (aanwezig === 'nee') {
     showSuccess('Wat jammer dat je er niet bij kunt zijn. We denken aan je op onze grote dag. ♡');
   } else {
