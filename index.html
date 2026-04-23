@@ -453,7 +453,7 @@
   <div class="code-gate-hero" id="code-gate">
     <p>Vul jouw persoonlijke uitnodigingscode in<br>om de website te bekijken.</p>
     <div class="code-input-wrap">
-      <input type="text" class="code-input" id="invite-code" placeholder="JOUW CODE" maxlength="14" autocomplete="off" autocorrect="off" spellcheck="false">
+      <input type="text" class="code-input" id="invite-code" placeholder="POSTCODE" maxlength="7" autocomplete="off" autocorrect="off" spellcheck="false">
       <button class="btn" onclick="checkCode()">Bekijk website →</button>
     </div>
     <p class="code-error" id="code-error">Ongeldige code — controleer je uitnodiging.</p>
@@ -963,40 +963,55 @@
 
 <script>
 /* ══════════════════════════════════════════
-   CODES — 4 codes met type + partner optie
-   dag_plus1   = daggast mét partner
-   dag         = daggast zonder partner
-   avond_plus1 = avondgast mét partner
-   avond       = avondgast zonder partner
+   Google Sheets postcode-lookup
+   Vul hieronder de URL in van je Apps Script
+   (zie instructies in de website-download)
 ══════════════════════════════════════════ */
-const CODES = {
-  'DAGPLUS2026'  : { type: 'dag',   partner: true  },
-  'DAG2026'      : { type: 'dag',   partner: false },
-  'AVONDPLUS26'  : { type: 'avond', partner: true  },
-  'AVOND2026'    : { type: 'avond', partner: false },
-};
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby5qitP1MZV3GRORFULgissDkE_Xc8AuFTD5jFR7g3ZgiAyfgLC-09tsquZm5IvrFQs/exec';
 
 let currentType    = null;
 let currentPartner = false;
 
 /* ── Code check ── */
-function checkCode() {
+async function checkCode() {
   const val   = document.getElementById('invite-code').value.trim().toUpperCase();
   const input = document.getElementById('invite-code');
   const err   = document.getElementById('code-error');
-  const entry = CODES[val];
+  const btn   = document.querySelector('.code-input-wrap .btn');
 
-  if (!entry) {
-    input.classList.add('error');
-    err.style.display = 'block';
-    return;
-  }
+  if (!val) return;
 
+  // Laad-status tonen
+  btn.textContent = 'Controleren…';
+  btn.disabled = true;
   input.classList.remove('error');
   err.style.display = 'none';
-  currentType    = entry.type;
-  currentPartner = entry.partner;
-  unlockSite(entry.type, entry.partner);
+
+  try {
+    const res  = await fetch(`${APPS_SCRIPT_URL}?code=${encodeURIComponent(val)}`);
+    const data = await res.json();
+
+    if (!data.found) {
+      input.classList.add('error');
+      err.style.display = 'block';
+      err.textContent = 'Ongeldige postcode — controleer je uitnodiging.';
+      btn.textContent = 'Bekijk website →';
+      btn.disabled = false;
+      return;
+    }
+
+    input.classList.remove('error');
+    err.style.display = 'none';
+    currentType    = data.type;    // 'dag' of 'avond'
+    currentPartner = data.partner; // true of false
+    unlockSite(data.type, data.partner);
+
+  } catch (e) {
+    err.style.display = 'block';
+    err.textContent = 'Er ging iets mis. Probeer het opnieuw of stuur een mail.';
+    btn.textContent = 'Bekijk website →';
+    btn.disabled = false;
+  }
 }
 
 document.getElementById('invite-code').addEventListener('keydown', e => {
