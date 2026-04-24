@@ -875,15 +875,14 @@
           <!-- Aanwezigheid daggast -->
           <div id="attendance-dag-wrap" style="display:none; margin-top:1.5rem;">
             <hr class="form-divider">
-            <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem; color:var(--text);">Bij welke onderdelen ben je aanwezig?</p>
-            <p style="font-size:0.8rem; color:var(--text-light); margin-bottom:1rem;">Selecteer alles wat van toepassing is.</p>
-            <div class="attendance-checks">
-              <label class="check-option"><input type="checkbox" name="dag-ceremonie" id="dag-ceremonie"><span>Ceremonie</span></label>
-              <label class="check-option"><input type="checkbox" name="dag-diner" id="dag-diner"><span>Diner</span></label>
-              <label class="check-option"><input type="checkbox" name="dag-feest" id="dag-feest"><span>Feest</span></label>
+            <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem; color:var(--text);">Wat is jouw aanwezigheid?</p>
+            <p style="font-size:0.8rem; color:var(--text-light); margin-bottom:1rem;">Kies één van de opties.</p>
+            <div class="radio-group">
+              <div class="radio-option"><input type="radio" name="dag-keuze" id="dag-hele-dag" value="hele-dag"><label for="dag-hele-dag">De hele dag (ceremonie, diner &amp; feest)</label></div>
+              <div class="radio-option"><input type="radio" name="dag-keuze" id="dag-alleen-feest" value="alleen-feest"><label for="dag-alleen-feest">Alleen het feest</label></div>
             </div>
 
-            <!-- Menukaart — verschijnt als diner aangevinkt -->
+            <!-- Menukaart — verschijnt als "de hele dag" gekozen -->
             <div id="diner-keuze-wrap" style="display:none; margin-top:1.5rem;">
               <hr class="form-divider">
               <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; margin-bottom:0.3rem; color:var(--text);">Jouw menukeuze</p>
@@ -952,10 +951,9 @@
               <!-- Partner aanwezigheid dag -->
               <div id="partner-attendance-dag-wrap" style="display:none; margin-top:1.2rem;">
                 <p style="font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.6rem;">Aanwezigheid partner</p>
-                <div class="attendance-checks">
-                  <label class="check-option"><input type="checkbox" name="p-dag-ceremonie" id="p-dag-ceremonie"><span>Ceremonie</span></label>
-                  <label class="check-option"><input type="checkbox" name="p-dag-diner" id="p-dag-diner"><span>Diner</span></label>
-                  <label class="check-option"><input type="checkbox" name="p-dag-feest" id="p-dag-feest"><span>Feest</span></label>
+                <div class="radio-group">
+                  <div class="radio-option"><input type="radio" name="p-dag-keuze" id="p-dag-hele-dag" value="hele-dag"><label for="p-dag-hele-dag">De hele dag (ceremonie, diner &amp; feest)</label></div>
+                  <div class="radio-option"><input type="radio" name="p-dag-keuze" id="p-dag-alleen-feest" value="alleen-feest"><label for="p-dag-alleen-feest">Alleen het feest</label></div>
                 </div>
 
                 <!-- Partner menukaart -->
@@ -1124,19 +1122,21 @@ function unlockSite(type, hasPartner) {
   document.getElementById('attendance-dag-wrap').style.display  = 'none';
   document.getElementById('attendance-avond-wrap').style.display = 'none';
 
-  // Diner checkbox → toon menukaart
-  const dinerCb = document.getElementById('dag-diner');
-  if (dinerCb) {
-    dinerCb.addEventListener('change', () => {
-      document.getElementById('diner-keuze-wrap').style.display = dinerCb.checked ? 'block' : 'none';
+  // Dag-keuze radio → toon/verberg menukaart
+  document.querySelectorAll('input[name="dag-keuze"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const heleDag = document.querySelector('input[name="dag-keuze"]:checked')?.value === 'hele-dag';
+      document.getElementById('diner-keuze-wrap').style.display = heleDag ? 'block' : 'none';
     });
-  }
-  const pDinerCb = document.getElementById('p-dag-diner');
-  if (pDinerCb) {
-    pDinerCb.addEventListener('change', () => {
-      document.getElementById('p-diner-keuze-wrap').style.display = pDinerCb.checked ? 'block' : 'none';
+  });
+
+  // Partner dag-keuze radio → toon/verberg partner menukaart
+  document.querySelectorAll('input[name="p-dag-keuze"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const pHeleDag = document.querySelector('input[name="p-dag-keuze"]:checked')?.value === 'hele-dag';
+      document.getElementById('p-diner-keuze-wrap').style.display = pHeleDag ? 'block' : 'none';
     });
-  }
+  });
 
   // Partner section
   document.getElementById('partner-wrap').style.display = hasPartner ? 'block' : 'none';
@@ -1189,17 +1189,13 @@ async function submitRSVP() {
 
   if (aanwezig === 'ja') {
     if (isDay) {
-      const dagOnderdelen = [];
-      if (document.getElementById('dag-ceremonie').checked) dagOnderdelen.push('Ceremonie');
-      if (document.getElementById('dag-diner').checked)     dagOnderdelen.push('Diner');
-      if (document.getElementById('dag-feest').checked)     dagOnderdelen.push('Feest');
-      summary += `\n🌞 Aanwezig bij: ${dagOnderdelen.length ? dagOnderdelen.join(', ') : 'Geen onderdelen geselecteerd'}`;
+      const dagKeuze = document.querySelector('input[name="dag-keuze"]:checked')?.value;
+      summary += `\n🌞 Aanwezigheid: ${dagKeuze === 'hele-dag' ? 'De hele dag (ceremonie, diner & feest)' : dagKeuze === 'alleen-feest' ? 'Alleen het feest' : 'Niet ingevuld'}`;
 
-      // Menu + dieet
-      if (document.getElementById('dag-diner').checked) {
-        const vg  = document.querySelector('input[name="g-voorgerecht"]:checked');
-        const hg  = document.querySelector('input[name="g-hoofdgerecht"]:checked');
-        const ng  = document.querySelector('input[name="g-nagerecht"]:checked');
+      if (dagKeuze === 'hele-dag') {
+        const vg   = document.querySelector('input[name="g-voorgerecht"]:checked');
+        const hg   = document.querySelector('input[name="g-hoofdgerecht"]:checked');
+        const ng   = document.querySelector('input[name="g-nagerecht"]:checked');
         const diet = document.getElementById('g-diet').value.trim();
         summary += `\n🍽️ Menukeuze:`;
         summary += `\n   Voorgerecht: ${vg  ? vg.value  : '—'}`;
@@ -1220,13 +1216,10 @@ async function submitRSVP() {
         const pLast  = document.getElementById('p-last').value.trim();
         summary += `\n\n👫 Partner: ${pFirst} ${pLast}`;
         if (isDay) {
-          const pOnderdelen = [];
-          if (document.getElementById('p-dag-ceremonie').checked) pOnderdelen.push('Ceremonie');
-          if (document.getElementById('p-dag-diner').checked)     pOnderdelen.push('Diner');
-          if (document.getElementById('p-dag-feest').checked)     pOnderdelen.push('Feest');
-          summary += `\n   Aanwezig bij: ${pOnderdelen.length ? pOnderdelen.join(', ') : '—'}`;
+          const pKeuze = document.querySelector('input[name="p-dag-keuze"]:checked')?.value;
+          summary += `\n   Aanwezigheid: ${pKeuze === 'hele-dag' ? 'De hele dag' : pKeuze === 'alleen-feest' ? 'Alleen het feest' : 'Niet ingevuld'}`;
 
-          if (document.getElementById('p-dag-diner').checked) {
+          if (pKeuze === 'hele-dag') {
             const pvg   = document.querySelector('input[name="p-voorgerecht"]:checked');
             const phg   = document.querySelector('input[name="p-hoofdgerecht"]:checked');
             const png   = document.querySelector('input[name="p-nagerecht"]:checked');
