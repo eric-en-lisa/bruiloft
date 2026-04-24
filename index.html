@@ -1041,76 +1041,44 @@
 
 <script>
 /* ══════════════════════════════════════════
-   Google Sheets postcode-lookup
-   Vul hieronder de URL in van je Apps Script
-   (zie instructies in de website-download)
+   CODES — postcodes per gast
+   type:    'dag' of 'avond'
+   partner: true of false
 ══════════════════════════════════════════ */
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwOyBbvd0yX0w_ZgVMto0L-wYJqkr5mbdJG0uhqT1dViR2S9Al0-VlAJsv4KwNPLXV6QQ/exec';
+const CODES = {
+  '9999DP': { type: 'dag',   partner: true  },
+  '9999DG': { type: 'dag',   partner: false },
+  '9999AP': { type: 'avond', partner: true  },
+  '9999AG': { type: 'avond', partner: false },
+};
 
 let currentType    = null;
 let currentPartner = false;
 
-/* ── Code check via JSONP (omzeilt CORS-blokkade) ── */
-async function checkCode() {
-  const val   = document.getElementById('invite-code').value.trim().toUpperCase();
+/* ── Code check ── */
+function checkCode() {
+  const val   = document.getElementById('invite-code').value.trim().toUpperCase().replace(/\s/g, '');
   const input = document.getElementById('invite-code');
   const err   = document.getElementById('code-error');
-  const btn   = document.querySelector('.code-input-wrap .btn');
+  const entry = CODES[val];
 
-  if (!val) return;
-
-  btn.textContent = 'Controleren…';
-  btn.disabled = true;
-  input.classList.remove('error');
-  err.style.display = 'none';
-
-  // JSONP: voeg een <script> tag toe die de Apps Script URL aanroept
-  // Apps Script stuurt callback(...) terug → omzeilt CORS
-  const callbackName = 'gsCallback_' + Date.now();
-  const script = document.createElement('script');
-  script.src = `${APPS_SCRIPT_URL}?code=${encodeURIComponent(val)}&callback=${callbackName}`;
-
-  const timeout = setTimeout(() => {
-    cleanup();
+  if (!entry) {
+    input.classList.add('error');
     err.style.display = 'block';
-    err.textContent = 'Verbinding mislukt. Controleer je internetverbinding.';
-    btn.textContent = 'Bekijk website →';
-    btn.disabled = false;
-  }, 10000);
-
-  function cleanup() {
-    clearTimeout(timeout);
-    delete window[callbackName];
-    if (script.parentNode) script.parentNode.removeChild(script);
+    err.textContent = 'Ongeldige postcode — controleer je uitnodiging.';
+    return;
   }
 
-  window[callbackName] = function(data) {
-    cleanup();
-    if (!data.found) {
-      input.classList.add('error');
-      err.style.display = 'block';
-      err.textContent = 'Ongeldige postcode — controleer je uitnodiging.';
-      btn.textContent = 'Bekijk website →';
-      btn.disabled = false;
-      return;
-    }
-    input.classList.remove('error');
-    err.style.display = 'none';
-    currentType    = data.type;
-    currentPartner = data.partner;
-    unlockSite(data.type, data.partner);
-  };
-
-  script.onerror = function() {
-    cleanup();
-    err.style.display = 'block';
-    err.textContent = 'Er ging iets mis. Probeer het opnieuw of stuur een mail.';
-    btn.textContent = 'Bekijk website →';
-    btn.disabled = false;
-  };
-
-  document.head.appendChild(script);
+  input.classList.remove('error');
+  err.style.display = 'none';
+  currentType    = entry.type;
+  currentPartner = entry.partner;
+  unlockSite(entry.type, entry.partner);
 }
+
+document.getElementById('invite-code').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkCode();
+});
 
 document.getElementById('invite-code').addEventListener('keydown', e => {
   if (e.key === 'Enter') checkCode();
