@@ -1141,16 +1141,22 @@ function unlockSite(type, hasPartner) {
   // Partner section
   document.getElementById('partner-wrap').style.display = hasPartner ? 'block' : 'none';
   if (hasPartner) {
-    document.getElementById('partner-attendance-dag-wrap').style.display  = isDay ? 'block' : 'none';
-    document.getElementById('partner-attendance-avond-wrap').style.display = isDay ? 'none' : 'block';
+    // Partner-details begint verborgen totdat "ja" gekozen wordt
+    document.getElementById('partner-details').style.display = 'none';
+    document.getElementById('partner-attendance-dag-wrap').style.display  = 'none';
+    document.getElementById('partner-attendance-avond-wrap').style.display = 'none';
     document.getElementById('partner-nee').checked = true;
   }
 
-  // Partner radio toggle
+  // Partner radio toggle — toon details én juiste aanwezigheidsblok
   document.querySelectorAll('input[name="partner"]').forEach(r => {
     r.addEventListener('change', () => {
-      document.getElementById('partner-details').style.display =
-        document.querySelector('input[name="partner"]:checked').value === 'ja' ? 'block' : 'none';
+      const jaGekozen = document.querySelector('input[name="partner"]:checked').value === 'ja';
+      document.getElementById('partner-details').style.display = jaGekozen ? 'block' : 'none';
+      if (jaGekozen) {
+        document.getElementById('partner-attendance-dag-wrap').style.display  = isDay ? 'block' : 'none';
+        document.getElementById('partner-attendance-avond-wrap').style.display = isDay ? 'none' : 'block';
+      }
     });
   });
 
@@ -1158,10 +1164,15 @@ function unlockSite(type, hasPartner) {
   document.querySelectorAll('input[name="attendance"]').forEach(r => {
     r.addEventListener('change', () => {
       const aanwezig = document.querySelector('input[name="attendance"]:checked').value === 'ja';
-      document.getElementById('attendance-dag-wrap').style.display   = (aanwezig && isDay)  ? 'block' : 'none';
-      document.getElementById('attendance-avond-wrap').style.display  = (aanwezig && !isDay) ? 'block' : 'none';
-      document.getElementById('partner-wrap').style.display           = (aanwezig && hasPartner) ? 'block' : 'none';
-      document.getElementById('attendance-nee-wrap').style.display    = aanwezig ? 'none' : 'block';
+      document.getElementById('attendance-dag-wrap').style.display    = (aanwezig && isDay)  ? 'block' : 'none';
+      document.getElementById('attendance-avond-wrap').style.display   = (aanwezig && !isDay) ? 'block' : 'none';
+      document.getElementById('partner-wrap').style.display            = (aanwezig && hasPartner) ? 'block' : 'none';
+      document.getElementById('attendance-nee-wrap').style.display     = aanwezig ? 'none' : 'block';
+      // Verberg menukaart als gast "niet aanwezig" kiest
+      if (!aanwezig) {
+        document.getElementById('diner-keuze-wrap').style.display = 'none';
+        document.getElementById('p-diner-keuze-wrap').style.display = 'none';
+      }
     });
   });
 
