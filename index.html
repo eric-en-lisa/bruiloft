@@ -655,10 +655,10 @@
           </div>
 
           <div class="menu-dish">
-            <p class="menu-dish-name">Burrata</p>
+            <p class="menu-dish-name">Geroosterde avocado</p>
             <p class="menu-dish-allergens">Lactose</p>
             <p class="menu-dish-components">
-              <span>basilicum venkel dressing</span><span>oer-tomaat</span><span>balsamico parels</span>
+              <span>shiitake</span><span>radijs</span>
             </p>
           </div>
         </div>
@@ -678,10 +678,10 @@
           </div>
 
           <div class="menu-dish">
-            <p class="menu-dish-name">Entrecote</p>
-            <p class="menu-dish-allergens">Gluten · Lactose</p>
+            <p class="menu-dish-name">Medaillons van kalfsvlees</p>
+            <p class="menu-dish-allergens">Gluten · Lactose · Halal mogelijk</p>
             <p class="menu-dish-components">
-              <span>mousseline</span><span>peper-cognac jus</span><span>paddenstoelen</span><span>groene asperges</span>
+              <span>gratin</span><span>romige truffeljus</span><span>courgette</span>
             </p>
           </div>
 
@@ -893,7 +893,7 @@
                 <div class="menu-choice-options">
                   <label class="menu-radio"><input type="radio" name="g-voorgerecht" value="Zalm"><span class="menu-radio-label">Zalm<em>mierikswortelcrème · avocado · tomaat</em></span></label>
                   <label class="menu-radio"><input type="radio" name="g-voorgerecht" value="Beef tataki"><span class="menu-radio-label">Beef tataki<em>ponzu gember dressing · shiitake · komkommer</em></span></label>
-                  <label class="menu-radio"><input type="radio" name="g-voorgerecht" value="Burrata"><span class="menu-radio-label">Burrata<em>basilicum venkel dressing · oer-tomaat · balsamico parels</em></span></label>
+                  <label class="menu-radio"><input type="radio" name="g-voorgerecht" value="Geroosterde avocado"><span class="menu-radio-label">Geroosterde avocado<em>shiitake · radijs</em></span></label>
                 </div>
               </div>
 
@@ -901,7 +901,7 @@
                 <p class="menu-choice-title">Hoofdgerecht</p>
                 <div class="menu-choice-options">
                   <label class="menu-radio"><input type="radio" name="g-hoofdgerecht" value="Zeebaars"><span class="menu-radio-label">Zeebaars<em>risotto · groene asperges · beurre blanc met haring kaviaar</em></span></label>
-                  <label class="menu-radio"><input type="radio" name="g-hoofdgerecht" value="Entrecote"><span class="menu-radio-label">Entrecote<em>mousseline · peper-cognac jus · paddenstoelen · groene asperges</em></span></label>
+                  <label class="menu-radio"><input type="radio" name="g-hoofdgerecht" value="Medaillons van kalfsvlees"><span class="menu-radio-label">Medaillons van kalfsvlees<em>gratin · romige truffeljus · courgette</em></span></label>
                   <label class="menu-radio"><input type="radio" name="g-hoofdgerecht" value="Tortellini"><span class="menu-radio-label">Tortellini<em>paddenstoelen · saus van pompoen · courgette</em></span></label>
                 </div>
               </div>
@@ -965,7 +965,7 @@
                     <div class="menu-choice-options">
                       <label class="menu-radio"><input type="radio" name="p-voorgerecht" value="Zalm"><span class="menu-radio-label">Zalm<em>mierikswortelcrème · avocado · tomaat</em></span></label>
                       <label class="menu-radio"><input type="radio" name="p-voorgerecht" value="Beef tataki"><span class="menu-radio-label">Beef tataki<em>ponzu gember dressing · shiitake · komkommer</em></span></label>
-                      <label class="menu-radio"><input type="radio" name="p-voorgerecht" value="Burrata"><span class="menu-radio-label">Burrata<em>basilicum venkel dressing · oer-tomaat · balsamico parels</em></span></label>
+                      <label class="menu-radio"><input type="radio" name="p-voorgerecht" value="Geroosterde avocado"><span class="menu-radio-label">Geroosterde avocado<em>shiitake · radijs</em></span></label>
                     </div>
                   </div>
 
@@ -973,7 +973,7 @@
                     <p class="menu-choice-title">Hoofdgerecht</p>
                     <div class="menu-choice-options">
                       <label class="menu-radio"><input type="radio" name="p-hoofdgerecht" value="Zeebaars"><span class="menu-radio-label">Zeebaars<em>risotto · groene asperges · beurre blanc met haring kaviaar</em></span></label>
-                      <label class="menu-radio"><input type="radio" name="p-hoofdgerecht" value="Entrecote"><span class="menu-radio-label">Entrecote<em>mousseline · peper-cognac jus · paddenstoelen · groene asperges</em></span></label>
+                      <label class="menu-radio"><input type="radio" name="p-hoofdgerecht" value="Medaillons van kalfsvlees"><span class="menu-radio-label">Medaillons van kalfsvlees<em>gratin · romige truffeljus · courgette</em></span></label>
                       <label class="menu-radio"><input type="radio" name="p-hoofdgerecht" value="Tortellini"><span class="menu-radio-label">Tortellini<em>paddenstoelen · saus van pompoen · courgette</em></span></label>
                     </div>
                   </div>
@@ -1118,9 +1118,9 @@ function unlockSite(type, hasPartner) {
     ? 'Je bent uitgenodigd voor de volledige dag. Laat ons voor 1 juli 2026 weten of je erbij bent.'
     : 'Je bent uitgenodigd voor het avondfeest. Laat ons voor 1 juli 2026 weten of je erbij bent.';
 
-  // Show/hide attendance blocks
-  document.getElementById('attendance-dag-wrap').style.display  = 'none';
-  document.getElementById('attendance-avond-wrap').style.display = 'none';
+  // Show/hide attendance blocks — dag-wrap meteen zichtbaar want "aanwezig" staat al aangevinkt
+  document.getElementById('attendance-dag-wrap').style.display  = isDay ? 'block' : 'none';
+  document.getElementById('attendance-avond-wrap').style.display = isDay ? 'none' : 'block';
 
   // Dag-keuze radio → toon/verberg menukaart
   document.querySelectorAll('input[name="dag-keuze"]').forEach(r => {
