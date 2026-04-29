@@ -185,16 +185,23 @@
 
   /* Hartje in plaats van stip */
   .time-dot {
-    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
     line-height: 1;
-    color: var(--gold);
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .time-dot svg {
+    width: 1rem;
+    height: 1rem;
+    fill: var(--gold);
     filter: drop-shadow(0 0 3px rgba(184,154,90,0.35));
   }
-  .program-item.special .time-dot {
-    font-size: 1.25rem;
-    color: var(--brown);
-    filter: drop-shadow(0 0 4px rgba(107,79,53,0.3));
+  .program-item.special .time-dot svg {
+    fill: var(--gold);
+    filter: drop-shadow(0 0 3px rgba(184,154,90,0.35));
   }
 
   .time-text { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: var(--gold); font-style: italic; white-space: nowrap; }
@@ -256,20 +263,24 @@
     /* Hartje: 28px breed, gecentreerd OP de lijn */
     .time-dot {
       width: 28px;
-      text-align: center;
       flex-shrink: 0;
-      font-size: 1rem !important;
-      color: var(--gold) !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .time-dot svg {
+      width: 1rem !important;
+      height: 1rem !important;
+      fill: var(--gold) !important;
       filter: drop-shadow(0 0 3px rgba(184,154,90,0.35)) !important;
     }
 
-    /* Speciale hartjes (openingsdans / verzamelen): bruin, iets groter */
-    .program-item.special .time-dot {
-      font-size: 1.25rem !important;
-      color: var(--brown) !important;
-      filter: drop-shadow(0 0 4px rgba(107,79,53,0.3)) !important;
+    /* Speciale hartjes: zelfde stijl als de rest */
+    .program-item.special .time-dot svg {
+      fill: var(--gold) !important;
+      filter: drop-shadow(0 0 3px rgba(184,154,90,0.35)) !important;
     }
-    .program-item.special .time-text { color: var(--brown) !important; }
+    .program-item.special .time-text { color: var(--gold) !important; }
 
     /* Content: altijd rechts, links uitgelijnd */
     .program-content {
@@ -424,8 +435,8 @@
     /* Ornament op één regel */
     .hero-ornament { font-size: 0.78rem; letter-spacing: 0.18em; }
     /* Hartjes in mobiele tijdlijn */
-    .time-dot { font-size: 1rem; color: var(--gold); }
-    .program-item.special .time-dot { font-size: 1.25rem; color: var(--brown); }
+    .time-dot svg { width: 1rem; height: 1rem; fill: var(--gold); }
+    .program-item.special .time-dot svg { fill: var(--gold); }
   }
 </style>
 </head>
@@ -504,13 +515,13 @@
               <h3>Ontvangst</h3>
               <p>Welkom op Kasteel De Wittenburg. Geniet van een drankje en de prachtige tuinen.</p>
             </div>
-            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">14:30</span></div>
+            <div class="program-time"><span class="time-dot"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="time-text">14:30</span></div>
             <div class="program-empty"></div>
           </div>
 
           <div class="program-item right">
             <div class="program-empty"></div>
-            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">15:00</span></div>
+            <div class="program-time"><span class="time-dot"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="time-text">15:00</span></div>
             <div class="program-content">
               <h3>Huwelijksceremonie</h3>
               <p>De officiële verbintenis van Lisa &amp; Eric in de historische zaal van het kasteel.</p>
@@ -522,13 +533,13 @@
               <h3>Receptie</h3>
               <p>Proosten op het nieuwe echtpaar op het terras van Kasteel De Wittenburg.</p>
             </div>
-            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">16:00</span></div>
+            <div class="program-time"><span class="time-dot"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="time-text">16:00</span></div>
             <div class="program-empty"></div>
           </div>
 
           <div class="program-item right">
             <div class="program-empty"></div>
-            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">18:00</span></div>
+            <div class="program-time"><span class="time-dot"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="time-text">18:00</span></div>
             <div class="program-content">
               <h3>Diner</h3>
               <p>Een feestelijk driegangendiner in de grand dining room van het kasteel.</p>
@@ -544,13 +555,13 @@
               <h3>Verzamelen in de feestzaal</h3>
               <p>De avondgasten worden verwelkomd. Samen verzamelen we voor het openingsmoment van de avond.</p>
             </div>
-            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">20:30</span></div>
+            <div class="program-time"><span class="time-dot"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="time-text">20:30</span></div>
             <div class="program-empty"></div>
           </div>
 
           <div class="program-item right special">
             <div class="program-empty"></div>
-            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">20:45</span></div>
+            <div class="program-time"><span class="time-dot"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="time-text">20:45</span></div>
             <div class="program-content">
               <h3>Openingsdans ♡</h3>
               <p>Het feest wordt officieel geopend met de eerste dans van Lisa &amp; Eric als echtpaar. Zorg dat je op tijd aanwezig bent!</p>
@@ -562,13 +573,13 @@
               <h3>Feest</h3>
               <p>De dansvloer is van jullie — live muziek, dans en de mooiste herinneringen de hele avond.</p>
             </div>
-            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">20:50</span></div>
+            <div class="program-time"><span class="time-dot"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="time-text">20:50</span></div>
             <div class="program-empty"></div>
           </div>
 
           <div class="program-item right">
             <div class="program-empty"></div>
-            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">00:30</span></div>
+            <div class="program-time"><span class="time-dot"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="time-text">00:30</span></div>
             <div class="program-content">
               <h3>Einde feest</h3>
               <p>Veilig naar huis — en tot gauw!</p>
@@ -587,13 +598,13 @@
               <h3>Ontvangst</h3>
               <p>Welkom op Kasteel De Wittenburg! Kom naar de feestzaal — het openingsmoment staat op het punt te beginnen.</p>
             </div>
-            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">20:30</span></div>
+            <div class="program-time"><span class="time-dot"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="time-text">20:30</span></div>
             <div class="program-empty"></div>
           </div>
 
           <div class="program-item right special">
             <div class="program-empty"></div>
-            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">20:45</span></div>
+            <div class="program-time"><span class="time-dot"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="time-text">20:45</span></div>
             <div class="program-content">
               <h3>Openingsdans ♡</h3>
               <p>Het feest wordt geopend met de allereerste dans van Lisa &amp; Eric als echtpaar. <strong>Wees op tijd</strong> — dit wil je niet missen!</p>
@@ -605,13 +616,13 @@
               <h3>Feest</h3>
               <p>De dansvloer is van jullie — live muziek, dans en de mooiste herinneringen tot in de nacht.</p>
             </div>
-            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">20:50</span></div>
+            <div class="program-time"><span class="time-dot"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="time-text">20:50</span></div>
             <div class="program-empty"></div>
           </div>
 
           <div class="program-item right">
             <div class="program-empty"></div>
-            <div class="program-time"><span class="time-dot">♥</span><span class="time-text">00:30</span></div>
+            <div class="program-time"><span class="time-dot"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="time-text">00:30</span></div>
             <div class="program-content">
               <h3>Einde feest</h3>
               <p>Veilig naar huis — en tot gauw!</p>
