@@ -319,7 +319,8 @@
   .menu-dish-components span::after { content: ' · '; color: var(--gold-pale); }
   .menu-dish-components span:last-child::after { content: ''; }
   .menu-dish-allergens { font-size: 0.68rem; color: var(--text-light); letter-spacing: 0.04em; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
-  .menu-dish-allergens::before { content: '△'; color: transparent; font-size: 0.65rem; line-height: 1; -webkit-text-stroke: 1px var(--gold-pale); text-stroke: 1px var(--gold-pale); }
+  .menu-dish-allergens::before { content: '△'; position: relative; color: transparent; font-size: 0.65rem; line-height: 1; -webkit-text-stroke: 1px var(--gold-pale); text-stroke: 1px var(--gold-pale); }
+  .menu-dish-allergens::before { content: '⚠'; color: var(--gold-pale); font-size: 0.7rem; -webkit-text-stroke: 0; text-stroke: 0; }
 
   .menu-course-divider { text-align: center; margin: 2.5rem 0; color: var(--gold-pale); letter-spacing: 0.6em; font-size: 0.7rem; }
 
@@ -445,8 +446,8 @@
 <nav id="main-nav">
   <a href="#programma">Programma</a>
   <a href="#menu" id="nav-menu">Menu</a>
-  <a href="#praktisch">Praktisch</a>
   <a href="#dresscode">Dresscode</a>
+  <a href="#praktisch">Praktisch</a>
   <a href="#cadeaus">Cadeaus</a>
   <a href="#rsvp">RSVP</a>
 </nav>
@@ -638,26 +639,26 @@
 
           <div class="menu-dish">
             <p class="menu-dish-name">Zalm</p>
-            <p class="menu-dish-allergens">Lactose</p>
             <p class="menu-dish-components">
               <span>mierikswortelcrème</span><span>avocado</span><span>tomaat</span>
             </p>
+            <p class="menu-dish-allergens">Lactose</p>
           </div>
 
           <div class="menu-dish">
             <p class="menu-dish-name">Beef tataki</p>
-            <p class="menu-dish-allergens">Gluten</p>
             <p class="menu-dish-components">
               <span>ponzu gember dressing</span><span>shiitake</span><span>komkommer</span>
             </p>
+            <p class="menu-dish-allergens">Gluten</p>
           </div>
 
           <div class="menu-dish">
             <p class="menu-dish-name">Geroosterde avocado</p>
-            <p class="menu-dish-allergens">Lactose</p>
             <p class="menu-dish-components">
               <span>shiitake</span><span>radijs</span>
             </p>
+            <p class="menu-dish-allergens">Lactose</p>
           </div>
         </div>
 
@@ -669,26 +670,26 @@
 
           <div class="menu-dish">
             <p class="menu-dish-name">Zeebaars</p>
-            <p class="menu-dish-allergens">Lactose</p>
             <p class="menu-dish-components">
               <span>risotto</span><span>groene asperges</span><span>beurre blanc met haring kaviaar</span>
             </p>
+            <p class="menu-dish-allergens">Lactose</p>
           </div>
 
           <div class="menu-dish">
             <p class="menu-dish-name">Medaillons van kalfsvlees</p>
-            <p class="menu-dish-allergens">Gluten · Lactose · Halal mogelijk</p>
             <p class="menu-dish-components">
               <span>gratin</span><span>romige truffeljus</span><span>courgette</span>
             </p>
+            <p class="menu-dish-allergens">Gluten · Lactose · Halal mogelijk</p>
           </div>
 
           <div class="menu-dish">
             <p class="menu-dish-name">Tortellini</p>
-            <p class="menu-dish-allergens">Gluten · Lactose</p>
             <p class="menu-dish-components">
               <span>paddenstoelen</span><span>saus van pompoen</span><span>courgette</span>
             </p>
+            <p class="menu-dish-allergens">Gluten · Lactose</p>
           </div>
         </div>
 
@@ -700,18 +701,18 @@
 
           <div class="menu-dish">
             <p class="menu-dish-name">Hazelnotencrème</p>
-            <p class="menu-dish-allergens">Gluten · Lactose · Noten</p>
             <p class="menu-dish-components">
               <span>caramel</span><span>mousse</span>
             </p>
+            <p class="menu-dish-allergens">Gluten · Lactose · Noten</p>
           </div>
 
           <div class="menu-dish">
             <p class="menu-dish-name">Framboos</p>
-            <p class="menu-dish-allergens">Gluten · Lactose · Noten</p>
             <p class="menu-dish-components">
               <span>pure chocolade</span><span>coulis</span>
             </p>
+            <p class="menu-dish-allergens">Gluten · Lactose · Noten</p>
           </div>
         </div>
 
@@ -722,47 +723,6 @@
       </p>
     </div>
   </div>
-
-  <!-- ── PRAKTISCH ── -->
-  <section class="content-section" id="praktisch">
-    <p class="section-label">Handig om te weten</p>
-    <h2 class="section-title">Praktische info</h2>
-    <p class="section-subtitle">Alles wat je nodig hebt voor een zorgeloze dag.</p>
-    <div class="ornament-line"><span>✦</span></div>
-
-    <div class="info-grid">
-      <div class="info-card">
-        <div class="info-card-icon">📍</div>
-        <h3>Locatie</h3>
-        <p>Kasteel de Wittenburg<br>Landgoed de Wittenburg 1<br>2244 BV Wassenaar<br><br><a href="https://maps.google.com/?q=Landgoed+de+Wittenburg+1+Wassenaar" target="_blank">Bekijk op Google Maps →</a></p>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon">🚗</div>
-        <h3>Parkeren</h3>
-        <p>Er is gratis parkeergelegenheid op het terrein van het landgoed.</p>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon">👗</div>
-        <h3>Dresscode</h3>
-        <p>Summer Elegance. Denk aan lichte kleuren, beige, aardetinten en pastel.<br><br><a href="#dresscode" style="color:var(--gold);">Bekijk inspiratie →</a></p>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon">🏨</div>
-        <h3>Overnachten</h3>
-        <p>Op circa 7 minuten rijden (3 km) van de locatie bevindt zich een Van der Valk hotel. Wij raden aan vroeg te boeken.</p>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon">📸</div>
-        <h3>Foto's</h3>
-        <p>We hebben een professionele fotograaf. Tijdens de ceremonie vragen we iedereen de telefoon even weg te steken.<br><br>Na de bruiloft delen we de foto's via een gedeeld album.</p>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon">🎗️</div>
-        <h3>Ceremoniemeesters</h3>
-        <p>Aricia Foet en Arend van Dam zijn onze ceremoniemeesters. Voor vragen kun je bij hen terecht:<br><br>📞 xxxx<br>✉️ <a href="mailto:bruiloft.lisa.eric@gmail.com">bruiloft.lisa.eric@gmail.com</a><br><br>Wil je iets bijdragen aan de dag — zoals een speech? Laat dit dan aan de ceremoniemeesters weten, zodat het voor ons een verrassing blijft. 🎉</p>
-      </div>
-    </div>
-  </section>
 
   <!-- ── DRESSCODE ── -->
   <div class="dresscode-bg" id="dresscode">
@@ -814,6 +774,47 @@
       </div>
     </div>
   </div>
+
+  <!-- ── PRAKTISCH ── -->
+  <section class="content-section" id="praktisch">
+    <p class="section-label">Handig om te weten</p>
+    <h2 class="section-title">Praktische info</h2>
+    <p class="section-subtitle">Alles wat je nodig hebt voor een zorgeloze dag.</p>
+    <div class="ornament-line"><span>✦</span></div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-icon">📍</div>
+        <h3>Locatie</h3>
+        <p>Kasteel de Wittenburg<br>Landgoed de Wittenburg 1<br>2244 BV Wassenaar<br><br><a href="https://maps.google.com/?q=Landgoed+de+Wittenburg+1+Wassenaar" target="_blank">Bekijk op Google Maps →</a></p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🚗</div>
+        <h3>Parkeren</h3>
+        <p>Er is gratis parkeergelegenheid op het terrein van het kasteel.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">💬</div>
+        <h3>Vragen</h3>
+        <p>Heb je vragen vóór de grote dag? Je kunt altijd contact opnemen met ons of met onze ceremoniemeesters Aricia Foet en Arend van Dam.<br><br>Op de dag zelf kun je voor al je vragen terecht bij de ceremoniemeesters.<br><br>✉️ <a href="mailto:bruiloft.lisa.eric@gmail.com">bruiloft.lisa.eric@gmail.com</a></p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🏨</div>
+        <h3>Overnachten</h3>
+        <p>Op circa 7 minuten rijden (3 km) van de locatie bevindt zich een Van der Valk hotel.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">📸</div>
+        <h3>Foto's</h3>
+        <p>We hebben een professionele fotograaf. Tijdens de ceremonie vragen we iedereen de telefoon even weg te steken.<br><br>Na de bruiloft delen we de foto's via een gedeeld album.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🎗️</div>
+        <h3>Ceremoniemeesters</h3>
+        <p>Aricia Foet en Arend van Dam zijn onze ceremoniemeesters. Voor vragen kun je bij hen terecht:<br><br>📞 xxxx<br>✉️ <a href="mailto:bruiloft.lisa.eric@gmail.com">bruiloft.lisa.eric@gmail.com</a><br><br>Wil je iets bijdragen aan de dag — zoals een speech? Laat dit dan aan de ceremoniemeesters weten, zodat het voor ons een verrassing blijft. 🎉</p>
+      </div>
+    </div>
+  </section>
 
   <!-- ── CADEAUS ── -->
   <div class="gifts-bg" id="cadeaus">
@@ -1028,7 +1029,6 @@
   <footer>
     <p>Lisa de Miranda <span>✦</span> Eric van Dam</p>
     <p style="margin-top:0.5rem; font-size:0.68rem;">4 september 2026 &nbsp;·&nbsp; Kasteel De Wittenburg, Wassenaar</p>
-    <p style="margin-top:0.5rem; font-size:0.68rem;">Vragen? <a href="/cdn-cgi/l/email-protection#5e32372d3f703b2c373d6c6e6c681e39333f3732703d3133" style="color:var(--gold); text-decoration:none;"><span class="__cf_email__" data-cfemail="0b6762786a256e796268393b393d4b6c666a626725686466">[email&#160;protected]</span></a></p>
   </footer>
 
 </div><!-- /#site-content -->
