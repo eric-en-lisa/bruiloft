@@ -297,9 +297,7 @@
   .menu-inner { max-width: 900px; margin: 0 auto; padding: 6rem 2rem; }
 
   .menu-booklet { max-width: 780px; margin: 0 auto; background: var(--white); border: 1px solid var(--gold-pale); padding: 3.5rem 4rem; position: relative; }
-  .menu-booklet::before, .menu-booklet::after { content: '✦'; position: absolute; color: var(--gold-pale); font-size: 1rem; }
-  .menu-booklet::before { top: 1.2rem; left: 1.8rem; }
-  .menu-booklet::after  { bottom: 1.2rem; right: 1.8rem; }
+  .menu-booklet::before, .menu-booklet::after { content: ''; }
 
   .menu-course { margin-bottom: 3rem; opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .menu-course.visible { opacity: 1; transform: none; }
@@ -316,7 +314,7 @@
   .menu-dish-name { font-family: 'Cormorant Garamond', serif; font-size: 1.12rem; font-weight: 400; color: var(--text); margin-bottom: 0.3rem; }
   .menu-dish-components { font-size: 0.8rem; color: var(--text-light); line-height: 1.6; margin-bottom: 0.5rem; }
   .menu-dish-components span { display: inline; }
-  .menu-dish-components span::after { content: ' · '; color: var(--gold-pale); }
+  .menu-dish-components span::after { content: ' | '; color: var(--gold-pale); }
   .menu-dish-components span:last-child::after { content: ''; }
   .menu-dish-allergens { font-size: 0.68rem; color: var(--text-light); letter-spacing: 0.04em; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
   .menu-dish-allergens::before {
@@ -542,7 +540,7 @@
       <button class="btn" onclick="checkCode()">Bekijk website →</button>
     </div>
     <p class="code-error" id="code-error">Ongeldige code — controleer je uitnodiging.</p>
-    <p class="code-hint">Geen code? Stuur een mail naar <a href="/cdn-cgi/l/email-protection#e18d889280cf84938882d3d1d3d7a1868c80888dcf828e8c"><span class="__cf_email__" data-cfemail="8de1e4feeca3e8ffe4eebfbdbfbbcdeae0ece4e1a3eee2e0">[email&#160;protected]</span></a></p>
+    <p class="code-hint">Ervaar je probleem? Laat het Eric of Lisa gerust weten.</p>
   </div>
 
   <div class="scroll-hint" id="scroll-hint" style="display:none;">
@@ -570,9 +568,11 @@
       <div class="ornament-line"><span>♡</span></div>
 
       <div class="story-text">
-        <p>Op 10 augustus 2015 begon ons verhaal — een zomerse dag die alles veranderde. Vanaf dat moment waren we onafscheidelijk: samen op reis, samen avonturen beleven, samen thuis.</p>
-        <p>Tien jaar later, op diezelfde datum in augustus 2025, nam Eric Lisa mee naar Praag. Hoog boven de stad, met uitzicht over de Moldau en de daken van de oude binnenstad, vroeg hij haar ten huwelijk. En Lisa zei ja.</p>
-        <p>Op 4 september 2026 vieren we dat op Kasteel De Wittenburg in Wassenaar — omringd door iedereen die ons dierbaar is. We kunnen niet wachten om die dag met jullie te delen. ♡</p>
+        <p>Meer dan elf jaar geleden hadden wij onze allereerste date bij Dudok. Al snel sloeg de vonk definitief over en op 10 augustus 2015 waren wij officieel een stel.</p>
+        <p>Sindsdien hebben we samen veel mooie herinneringen gemaakt. Van verre reizen naar onder andere Curaçao, Brazilië, Indonesië, Kenia en Tanzania tot sportieve uitstapjes naar de Olympische Spelen, een voetbal- of handbalwedstrijd, avontuur mocht daarbij nooit ontbreken. Maar ook van een ontspannen avond samen op de bank, bingewatchend met een goede serie, kunnen wij enorm genieten.</p>
+        <p>Inmiddels hebben wij ons plekje gevonden in het mooie Delft, waar we met veel plezier samen wonen en genieten van zowel het dagelijks leven als alle nieuwe avonturen die nog op ons pad komen.</p>
+        <p>Precies tien jaar later, op 10 augustus 2025, ging Eric in het prachtige Praag op één knie en vroeg hij Lisa ten huwelijk, met een schitterend uitzicht over de stad. Een moment dat wij nooit zullen vergeten.</p>
+        <p>Nu de grote dag steeds dichterbij komt, kijken wij er enorm naar uit om dit bijzondere moment samen met jullie te vieren.</p>
       </div>
 
       <div class="carousel-outer">
@@ -861,12 +861,12 @@
       <div class="info-card">
         <div class="info-card-icon">🏨</div>
         <h3>Overnachten</h3>
-        <p>Op circa 7 minuten rijden (3 km) van de locatie bevindt zich het Van der Valk Hotel Den Haag – Wassenaar.<br><br><a href="https://www.google.com/maps/place/?q=place_id:ChIJ4fcOJoS3xUcR1-XsxV3VSAY" target="_blank">Bekijk op Google Maps →</a></p>
+        <p>Indien je in de buurt van de locatie een slaapplek zoekt, is er op circa 7 minuten (3km) rijden een Van der Valk hotel.<br><br><a href="https://www.google.com/maps/place/?q=place_id:ChIJ4fcOJoS3xUcR1-XsxV3VSAY" target="_blank">Bekijk op Google Maps →</a></p>
       </div>
       <div class="info-card">
         <div class="info-card-icon">📸</div>
         <h3>Foto's</h3>
-        <p>We hebben een professionele fotograaf. Tijdens de ceremonie vragen we iedereen de telefoon even weg te steken — buiten de ceremonie zijn foto's natuurlijk van harte welkom!<br><br>Na de bruiloft delen we de foto's via een gedeeld album.</p>
+        <p>We hebben een professionele fotograaf. Tijdens de ceremonie vragen we iedereen de telefoon even weg te steken — buiten de ceremonie zijn foto's natuurlijk van harte welkom!</p>
       </div>
       <div class="info-card">
         <div class="info-card-icon">🎗️</div>
@@ -876,7 +876,7 @@
       <div class="info-card">
         <div class="info-card-icon">💬</div>
         <h3>Vragen</h3>
-        <p>Heb je vragen vóór de grote dag? Je kunt altijd contact opnemen met ons of met onze ceremoniemeester Aricia Foet.<br><br>Op de dag zelf kun je voor al je vragen bij Aricia terecht.</p>
+        <p>Heb je vragen vóór de grote dag? Je kunt altijd contact opnemen met ons of met onze ceremoniemeester.<br><br>Op de dag zelf kun je voor al je vragen bij Aricia terecht.</p>
       </div>
     </div>
   </section>
