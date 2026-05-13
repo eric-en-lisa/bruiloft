@@ -1113,7 +1113,7 @@
           <!-- Niet aanwezig -->
           <div id="attendance-nee-wrap" style="display:none; margin-top:1.5rem;">
             <hr class="form-divider">
-            <p style="font-size:0.88rem; color:var(--text-light); line-height:1.7;">Wat jammer dat je er niet bij kunt zijn. We denken aan je op onze grote dag. ♡</p>
+            <p style="font-size:0.88rem; color:var(--text-light); line-height:1.7;">Wat jammer dat je er niet bij kunt zijn. ♡</p>
           </div>
 
           <div class="form-group" style="margin-top:1.5rem;">
@@ -1260,11 +1260,13 @@ function unlockSite(type, hasPartner) {
   requestAnimationFrame(() => requestAnimationFrame(() => site.classList.add('fade-in')));
 
   // Welcome banner
-  document.getElementById('welcome-pill').textContent  = isDay ? 'Daggast' : 'Avondgast';
+  const pill = document.getElementById('welcome-pill');
+  if (isDay) { pill.textContent = 'Daggast'; pill.style.display = 'inline-block'; }
+  else { pill.style.display = 'none'; }
   document.getElementById('welcome-title').textContent = 'Welkom!';
   document.getElementById('welcome-text').textContent  = isDay
     ? 'Je bent uitgenodigd voor de volledige dag — van ceremonie tot diner en avondfeest. We kunnen niet wachten om deze dag met jou te vieren!'
-    : 'Je bent uitgenodigd voor het avondfeest op Kasteel De Wittenburg. Het feest start om 20:30 — zorg dat je er op tijd bij bent voor de openingsdans om 20:45!';
+    : 'Je bent door Eric en Lisa uitgenodigd voor het trouwfeest op Kasteel De Wittenburg. Het feest start om 20:30 — zorg dat je er op tijd bij bent voor de openingsdans om 20:45!';
 
   // Program
   document.getElementById('prog-dag').style.display   = isDay ? 'block' : 'none';
@@ -1278,7 +1280,9 @@ function unlockSite(type, hasPartner) {
   document.getElementById('nav-menu').style.display     = isDay ? ''      : 'none';
 
   // RSVP labels
-  document.getElementById('rsvp-badge').textContent = isDay ? 'Daggast' : 'Avondgast';
+  const rsvpBadge = document.getElementById('rsvp-badge');
+  if (isDay) { rsvpBadge.textContent = 'Daggast'; rsvpBadge.style.display = 'inline-block'; }
+  else { rsvpBadge.style.display = 'none'; }
   document.getElementById('rsvp-sub').textContent   = isDay
     ? 'Je bent uitgenodigd voor de volledige dag. Laat ons voor 1 juli 2026 weten of je erbij bent.'
     : 'Je bent uitgenodigd voor het avondfeest. Laat ons voor 1 juli 2026 weten of je erbij bent.';
