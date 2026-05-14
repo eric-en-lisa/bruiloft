@@ -451,6 +451,94 @@
   @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
   @keyframes scrollPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
+  /* RSVP POPUP */
+  .rsvp-popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(58, 46, 36, 0.45);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .rsvp-popup-overlay.show {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .rsvp-popup {
+    background: var(--cream);
+    border: 1px solid var(--gold-pale);
+    max-width: 480px;
+    width: 100%;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+  }
+  .rsvp-popup-overlay.show .rsvp-popup {
+    transform: translateY(0);
+  }
+  .rsvp-popup-corner {
+    position: absolute;
+    color: var(--gold-pale);
+    font-size: 0.9rem;
+    line-height: 1;
+  }
+  .rsvp-popup-corner.tl { top: 0.9rem; left: 1.1rem; }
+  .rsvp-popup-corner.br { bottom: 0.9rem; right: 1.1rem; }
+  .rsvp-popup-icon { font-size: 1.6rem; color: var(--gold); margin-bottom: 1.2rem; }
+  .rsvp-popup h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+  .rsvp-popup p {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+  .rsvp-popup .btn-popup {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--gold);
+    border: none;
+    padding: 1rem 2.2rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.15s;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .rsvp-popup .btn-popup:hover { background: var(--brown); }
+  .rsvp-popup .btn-popup:active { transform: scale(0.98); }
+  .rsvp-popup-close {
+    position: absolute;
+    top: 0.9rem; right: 1.1rem;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .rsvp-popup-close:hover { color: var(--gold); }
+  @media (max-width: 480px) {
+    .rsvp-popup { padding: 2.2rem 1.5rem; }
+  }
+
   /* RESPONSIVE — overige elementen */
   @media (max-width: 620px) {
     nav { gap: 1rem; font-size: 0.6rem; flex-wrap: wrap; }
@@ -558,7 +646,7 @@
 
   <!-- Welcome -->
   <div class="welcome-banner">
-    <div class="guest-type-pill" id="welcome-pill">—</div>
+    <div class="guest-type-pill" id="welcome-pill" style="display:none">—</div>
     <h2 id="welcome-title">Van harte welkom!</h2>
     <p id="welcome-text"></p>
   </div>
@@ -951,7 +1039,7 @@
 
       <div class="rsvp-form">
         <div id="rsvp-step-form">
-          <span class="rsvp-badge" id="rsvp-badge">—</span>
+          <span class="rsvp-badge" id="rsvp-badge" style="display:none">—</span>
           <h3 class="rsvp-type-title">Jouw aanmelding</h3>
           <p class="rsvp-type-sub" id="rsvp-sub">Vul je gegevens hieronder in.</p>
 
@@ -1143,6 +1231,19 @@
 
 </div><!-- /#site-content -->
 
+<!-- RSVP POPUP -->
+<div class="rsvp-popup-overlay" id="rsvp-popup-overlay" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+  <div class="rsvp-popup">
+    <span class="rsvp-popup-corner tl">✦</span>
+    <span class="rsvp-popup-corner br">✦</span>
+    <button class="rsvp-popup-close" onclick="closeRsvpPopup()" aria-label="Sluiten">✕</button>
+    <div class="rsvp-popup-icon">♡</div>
+    <h3 id="popup-title">Vergeet je RSVP niet!</h3>
+    <p>Laat ons voor <strong>1 juli 2026</strong> weten of je erbij bent.<br>Jouw aanmelding helpt ons om alles perfect voor te bereiden.</p>
+    <button class="btn-popup" onclick="goToRsvp()">RSVP invullen</button>
+  </div>
+</div>
+
 <script>
 /* ══════════════════════════════════════════
    CODES — postcodes per gast
@@ -1260,9 +1361,7 @@ function unlockSite(type, hasPartner) {
   requestAnimationFrame(() => requestAnimationFrame(() => site.classList.add('fade-in')));
 
   // Welcome banner
-  const pill = document.getElementById('welcome-pill');
-  if (isDay) { pill.textContent = 'Daggast'; pill.style.display = 'inline-block'; }
-  else { pill.style.display = 'none'; }
+  // welcome-pill verborgen
   document.getElementById('welcome-title').textContent = 'Welkom!';
   document.getElementById('welcome-text').textContent  = isDay
     ? 'Je bent uitgenodigd voor de volledige dag — van ceremonie tot diner en avondfeest. We kunnen niet wachten om deze dag met jou te vieren!'
@@ -1280,9 +1379,7 @@ function unlockSite(type, hasPartner) {
   document.getElementById('nav-menu').style.display     = isDay ? ''      : 'none';
 
   // RSVP labels
-  const rsvpBadge = document.getElementById('rsvp-badge');
-  if (isDay) { rsvpBadge.textContent = 'Daggast'; rsvpBadge.style.display = 'inline-block'; }
-  else { rsvpBadge.style.display = 'none'; }
+  // rsvp-badge verborgen
   document.getElementById('rsvp-sub').textContent   = isDay
     ? 'Je bent uitgenodigd voor de volledige dag. Laat ons voor 1 juli 2026 weten of je erbij bent.'
     : 'Je bent uitgenodigd voor het avondfeest. Laat ons voor 1 juli 2026 weten of je erbij bent.';
@@ -1350,6 +1447,11 @@ function unlockSite(type, hasPartner) {
   setTimeout(() => {
     document.getElementById('site-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 350);
+
+  // Toon RSVP popup na korte vertraging
+  setTimeout(() => {
+    document.getElementById('rsvp-popup-overlay').classList.add('show');
+  }, 1400);
 }
 
 /* ── Submit ── */
@@ -1459,6 +1561,31 @@ function showSuccess(msg) {
   document.getElementById('success-text').textContent = msg;
 }
 
+
+/* ── RSVP Popup ── */
+function closeRsvpPopup() {
+  document.getElementById('rsvp-popup-overlay').classList.remove('show');
+}
+
+function goToRsvp() {
+  closeRsvpPopup();
+  setTimeout(() => {
+    const rsvpSection = document.getElementById('rsvp');
+    if (rsvpSection) {
+      rsvpSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, 300);
+}
+
+// Sluit popup bij klik buiten het venster
+document.getElementById('rsvp-popup-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeRsvpPopup();
+});
+
+// Sluit popup met Escape-toets
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeRsvpPopup();
+});
 
 /* ── Carousel ── */
 (function() {
